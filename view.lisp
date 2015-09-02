@@ -9,8 +9,5 @@
          (:head
           (:meta :charset "UTF-8"))
          (:body
-          (cl-who:htm
-           (cl-who:str
-            (cl-who:conc
-             ,@body))))
+          ,@body)
          ,s))))

@@ -4,9 +4,12 @@
   :depends-on (:ningle
                :ironclad
                :flexi-streams
-               :simple-date
+               :clack
+               :lack
                :cl-markdown
                :cl-ppcre
+               :closer-mop
+               :cl-who
                :mongo-cl-driver)
   :components
   ((:file "user")

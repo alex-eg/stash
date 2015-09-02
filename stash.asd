@@ -11,7 +11,11 @@
                :closer-mop
                :cl-who
                :mongo-cl-driver)
-  :components
-  ((:file "user")
-   (:file "post")
-   (:file "diary")))
+  :components ((:file "packages")
+               (:file "model")
+               (:file "user")
+               (:file "post")
+               (:file "view")
+               (:file "header")
+               (:file "main-page")
+               (:file "app")))

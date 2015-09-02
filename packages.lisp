@@ -1,7 +1,13 @@
 (in-package :cl-user)
 
-(defpackage :model
+(defpackage :stash.model
   (:use :cl))
 
-(defpackage :app
+(defpackage :stash.views
   (:use :cl))
+
+(defpackage :stash
+  (:use :cl
+        :stash.views
+        :stash.model)
+  (:export :start))

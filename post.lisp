@@ -1,3 +1,4 @@
-(in-package :model)
+(in-package :stash.model)
 
-(defun)
+(defun markdown->html (text)
+  (cl-markdown:markdown text))

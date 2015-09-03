@@ -2,8 +2,10 @@
 
 (defun header (params)
   (declare (ignore params))
-  (cl-who:with-html-output-to-string (s nil :indent t)
+  (with-html-output-to-string (s nil :indent t)
     (:div :id "header"
           (:div :id "row"
                 (:div :id "left"
-                      (:a :href "/login" (cl-who:str "Login")))))))
+                      (if (gethash :authorized (gethash :session ningle:*context*))
+                          (htm (:a :href "/logout" (str "Log out")))
+                          (htm (:a :href "/login" (str "Log In")))))))))

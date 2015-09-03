@@ -19,7 +19,10 @@
               (if (and (string= (stash.model::user-login user) login)
                        (string= (stash.model::string->hash password)
                                 (stash.model::user-password user)))
-                  "You're authorized! Hooray!"
+                  (progn
+                    (let ((s (gethash :session ningle:*context*)))
+                      (setf (gethash :authorized s) t))
+                    "You're authorized! Hooray!")
                   "I don't know you. Go away."))))
   (setf (ningle:route app "/logout")
         #'logout)

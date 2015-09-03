@@ -9,8 +9,9 @@
                :cl-markdown
                :cl-ppcre
                :closer-mop
-               :cl-who
-               :lass
+               :cl-who                  ; html templating
+               :lass                    ; css generation
+               :parenscript             ; javascript
                :mongo-cl-driver)
   :components ((:file "packages")
                (:file "model")

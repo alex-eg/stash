@@ -4,7 +4,8 @@
   (:use :cl))
 
 (defpackage :stash.views
-  (:use :cl))
+  (:use :cl
+        :cl-who))
 
 (defpackage :stash
   (:use :cl

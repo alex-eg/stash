@@ -5,7 +5,7 @@
   (check-type parameters list "lambda list")
   (alexandria:with-gensyms (s)
     `(defun ,name ,parameters
-       (cl-who:with-html-output-to-string (,s nil :prologue t :indent t)
+       (with-html-output-to-string (,s nil :prologue t :indent t)
          (:head
           (:meta :charset "UTF-8"))
          (:body
@@ -13,6 +13,6 @@
          ,s))))
 
 (define-view hello-page (params)
-  (cl-who:str (header params))
+  (str (header params))
   (:div :id "hello-area"
-        (:p (:b (cl-who:fmt "Hello, ~A" (cdr (assoc :name params)))))))
+        (:p (:b (fmt "Hello, ~A" (cdr (assoc :name params)))))))

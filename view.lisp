@@ -11,3 +11,8 @@
          (:body
           ,@body)
          ,s))))
+
+(define-view hello-page (params)
+  (cl-who:str (header params))
+  (:div :id "hello-area"
+        (:p (:b (cl-who:fmt "Hello, ~A" (cdr (assoc :name params)))))))

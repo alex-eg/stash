@@ -10,4 +10,9 @@
                  (cl-who:fmt "Hello there~~"))))))
 
 (define-view login-page (params)
-  (header params))
+  (:form :id "login"
+         :action "./login"
+         :method "post"
+         (cl-who:str "Login") (:input :type "text" :name "login") (:br)
+         (cl-who:str "Password") (:input :type "password" :name "password") (:br)
+         (:input :type "submit" :value "Log in")))

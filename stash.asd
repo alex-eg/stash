@@ -10,6 +10,7 @@
                :cl-ppcre
                :closer-mop
                :cl-who
+               :lass
                :mongo-cl-driver)
   :components ((:file "packages")
                (:file "model")

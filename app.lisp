@@ -22,7 +22,10 @@
                   "You're authorized! Hooray!"
                   "I don't know you. Go away."))))
   (setf (ningle:route app "/logout")
-        #'logout))
+        #'logout)
+  (setf (ningle:route app "/hello/:name")
+
+      #'stash.views::hello-page))
 
 (defun logout (params)
   ())

@@ -2,6 +2,7 @@
 
 (asdf:defsystem :stash
   :depends-on (:ningle
+               :alexandria
                :ironclad
                :flexi-streams
                :clack

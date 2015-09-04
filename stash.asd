@@ -12,7 +12,7 @@
                :cl-who                  ; html templating
                :lass                    ; css generation
                :parenscript             ; javascript
-               :mongo-cl-driver)
+               :mongo-cl-driver.usocket)
   :components ((:file "packages")
                (:file "model")
                (:file "user")

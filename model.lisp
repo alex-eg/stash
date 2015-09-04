@@ -32,3 +32,8 @@
                       value)))
             slot-value-list)
     hash))
+
+(defun hash-to-object (hash class-name-symbol)
+  (let* ((class (intern (symbol-name class-name-symbol) *package*))
+         (object (make-instance class)))
+    'pass))

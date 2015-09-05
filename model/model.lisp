@@ -34,12 +34,26 @@
 
 (defun get-slot-value-list (object)
   (let* ((class (class-of object))
-         (slot-name-list (mapcar #'closer-mop:slot-definition-name
-                            (closer-mop:class-slots class))))
-    (mapcar (lambda (slot-name) (cons slot-name  (or (and (slot-boundp object slot-name)
-                                                          (slot-value object slot-name))
-                                                     "")))
+         (slot-name-list (remove-if (lambda (slot-name)
+                                      (or (string= slot-name "COLLECTION")
+                                          (string= slot-name "_id")))
+                                    (mapcar #'closer-mop:slot-definition-name
+                                               (closer-mop:class-slots class)))))
+    (mapcar (lambda (slot-name) (cons slot-name
+                                      (or (and (slot-boundp object slot-name)
+                                               (ensure-valid-value (slot-value object slot-name)))
+                                          "")))
             slot-name-list)))
+
+(defun ensure-valid-value (object)
+  (etypecase object
+    (string object)
+    (single-float object)
+    (double-float object)
+    (fixnum object)
+    (list (make-hash-array object))
+    (simple-vector (make-hash-array object))
+    (t (make-slot-value-hash object))))
 
 (defun make-slot-value-hash (object)
   (let* ((slot-value-list (get-slot-value-list object))
@@ -51,6 +65,11 @@
                       value)))
             slot-value-list)
     hash))
+
+(defun make-hash-array (sequence)
+  (map 'simple-vector
+       #'ensure-valid-value
+       sequence))
 
 (defun hash-to-object (hash class-name-symbol)
   (let* ((class (intern (symbol-name class-name-symbol) *package*))

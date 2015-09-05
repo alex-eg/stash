@@ -1,13 +1,36 @@
-(mongo:with-client (c (mongo:create-mongo-client
-                       :usocket
-                       :server (make-instance 'mongo:server-config
-                                              :hostname "localhost"
-                                              :port 27017)
-                       :write-concern mongo:+write-concern-normal+))
-  (let ((db (make-instance 'mongo:database :mongo-client c
-                           :name "test")))
-    (let ((col (mongo:collection db "posts"))
-          (h (make-hash-table)))
-      (setf (gethash "foo" h) "bar")
-      (setf (gethash "num" h) 822)
-      (mongo:insert col h))))
+(in-package :stash-test)
+
+(plan 15)
+
+(is-error (make-instance 'user) 'simple-error)
+
+(macrolet
+    ((test-database ()
+       '(progn
+         (is (mongo:remove user (make-hash-table)) nil)
+         (is (mongo:find user) nil)
+         (is-error (store not-mongo-storable db ) 'simple-error)
+         (is (store user1 db) nil)
+         (is (store user2 db) nil)
+         (is (length (mongo:find user)) 2)
+         (ok (mongo:find user)))))
+
+  (let* ((user1 (make-instance 'user
+                               :collection "user"
+                               :login "test-user"
+                               :email "test@test.net"
+                               :handle "shown-name"
+                               :password "password-hash"
+                               :friend-list '()))
+         (user2 (make-instance 'user
+                               :collection "user"
+                               :login "test-user2"
+                               :friend-list (list user1)))
+         (not-mongo-storable (make-instance 'standard-object)))
+    (with-database (db "stash-test")
+      (with-collection (user "user" db)
+        (test-database)))
+    (with-database-and-collection (user "user" db "stash-test")
+      (test-database))))
+
+(finalize)

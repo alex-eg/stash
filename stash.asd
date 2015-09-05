@@ -7,12 +7,14 @@
 (defsystem :stash
   :components
   ((:module "model"
+            :depends-on ("packages")
             :components
             ((:file "model")
              (:file "user")
              (:file "post")))
 
    (:module "views"
+            :depends-on ("packages")
             :components
             ((:file "view")
              (:file "header")

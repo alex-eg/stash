@@ -1,6 +1,10 @@
 (in-package :cl-user)
 
-(asdf:defsystem :stash
+(defpackage :stash-asdf
+  (:use :cl :asdf))
+(in-package :stash-asdf)
+
+(defsystem :stash
   :components
   ((:module "model"
             :components

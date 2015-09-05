@@ -1,5 +1,24 @@
 (in-package :stash.model)
 
+(defmacro with-database ((var database-name) &body body)
+  (alexandria:with-gensyms (client)
+    `(mongo:with-client (,client (mongo:create-mongo-client
+                                  :usocket))
+       (let ((,var (make-instance 'mongo:database :mongo-client ,client
+                                  :name ,database-name)))
+         (progn ,@body)))))
+
+(defmacro with-collection ((collection collection-name database) &body body)
+  `(let ((,collection (mongo:collection ,database ,collection-name)))
+     (progn ,@body)))
+
+(defmacro with-database-and-collection ((collection collection-name database database-name) &body body)
+  `(with-database (,database ,database-name)
+     (let ((,collection (mongo:collection ,database ,collection-name)))
+       (progn ,@body))))
+
+;;; Model base class (note: maybe use power of MOP and provide more convenient metaclass?)
+
 (defclass mongo-storable ()
   ((_id :documentation "Internal mongo _id field"))
   ((collection :initarg :collection :initform (error "Mongo collection must be set")

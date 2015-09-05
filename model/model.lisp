@@ -20,8 +20,8 @@
 ;;; Model base class (note: maybe use power of MOP and provide more convenient metaclass?)
 
 (defclass mongo-storable ()
-  ((_id :documentation "Internal mongo _id field"))
-  ((collection :initarg :collection :initform (error "Mongo collection must be set")
+  ((|_id| :documentation "Internal mongo '_id' field")
+   (collection :initarg :collection :initform (error "Mongo collection must be set")
                :accessor collection)))
 
 (defgeneric store (object database-connection))

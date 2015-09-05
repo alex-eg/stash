@@ -17,6 +17,8 @@
    (:file "packages")
    (:file "app"))
 
+  :in-order-to ((test-op (test-op stash-test)))
+
   :depends-on (:ningle
                :alexandria
                :ironclad

@@ -2,7 +2,8 @@
 
 (defvar *user*
   (make-instance 'stash.model::user
-                 :login "user"
+                 :collection "users"
+                 :login "login"
                  :handle "Haru6aTop"
                  :password (stash.model::string->hash "TpyCuKu")))
 

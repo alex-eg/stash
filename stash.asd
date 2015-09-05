@@ -18,6 +18,7 @@
    (:file "app"))
 
   :depends-on (:ningle
+               :alexandria
                :ironclad
                :flexi-streams
                :clack
@@ -28,4 +29,4 @@
                :cl-who                  ; html templating
                :lass                    ; css generation
                :parenscript             ; javascript
-               :mongo-cl-driver))
+               :mongo-cl-driver.usocket))

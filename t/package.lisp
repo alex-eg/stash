@@ -9,3 +9,4 @@
 (in-package :stash-test)
 
 (setf prove:*enable-colors* t)
+(setf prove:*default-reporter* :tap)

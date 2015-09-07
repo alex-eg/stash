@@ -1,5 +1,14 @@
 (in-package :stash-test)
 
+(defvar *user-names*
+  '("grizzlycute" "captainfroglet" "petnervous" "frozenpuppy" "moonmoon"
+    "chaosslimyhammer" "chaosgazelle" "purepony" "supersonicwhitehook"
+    "chickenweasel" "thewhale" "staragent" "coyotemodern" "honeyeternal"
+    "thehatchling" "irisboiling" "duckiebitter" "studentstudent" "horsehorse"
+    "thegazelle" "purplerayz" "ministonyorangutan" "weaselrunny" "badwildcat"
+    "losfairy" "sugarhoney" "gladiatorgruesome" "runnyviper" "pigletstormy"
+    "thefiend" "roughmink" "puppymysterious" "woodenfistyjackal" "hiddeneagle"))
+
 (plan 15)
 
 (is-error (make-instance 'user) 'simple-error)

@@ -29,7 +29,10 @@
         #'logout)
   (setf (ningle:route app "/hello/:name")
 
-      #'stash.views::hello-page))
+        #'stash.views::hello-page))
+
+(defun generate-css ()
+  (stash.views::generate-general-css))
 
 (defun logout (params)
   ())
@@ -40,6 +43,7 @@
        using (hash-value v) do (format t "~A ~A~%" k v)))
 
 (defun start ()
+  (generate-css)
   (setf (cl-who:html-mode) :html5)
   (let ((app (make-instance 'ningle:<app>)))
     (install-routes app)

@@ -20,6 +20,11 @@
              (:file "header")
              (:file "main-page")))
 
+   (:module "static"
+            :depends-on ("packages")
+            :components
+            ((:file "css")))
+
    (:file "packages")
    (:file "app"))
 

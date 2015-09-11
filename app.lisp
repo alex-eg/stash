@@ -50,9 +50,6 @@
     (clack:clackup
      (lack:builder :session
                    (:static
-                    :path (lambda (path)
-                            (if (ppcre:scan "^(?:/.css$)" path)
-                                path
-                              nil))
+                    :path "/static"
                     :root *default-pathname-defaults*)
                    app))))

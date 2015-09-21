@@ -1,7 +1,11 @@
 (in-package :cl-user)
 
-(defpackage :stash.model
+(defpackage :stash.utils
   (:use :cl)
+  (:export :string->hash))
+
+(defpackage :stash.model
+  (:use :cl :stash.utils)
   (:export :with-database
            :with-collection
            :with-database-and-collection
@@ -15,6 +19,7 @@
 
 (defpackage :stash
   (:use :cl
+        :stash.utils
         :stash.views
         :stash.model)
   (:export :start))

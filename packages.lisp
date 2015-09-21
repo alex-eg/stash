@@ -11,6 +11,7 @@
            :with-database-and-collection
            :store
            :user
+           :settings
            :post))
 
 (defpackage :stash.views

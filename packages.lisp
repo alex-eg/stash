@@ -10,8 +10,12 @@
            :with-collection
            :with-database-and-collection
            :store
+
            :user
-           :settings
+
+           :config
+           :load-config-from-file
+
            :post))
 
 (defpackage :stash.views

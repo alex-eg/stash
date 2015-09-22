@@ -14,6 +14,8 @@
            :user
 
            :config
+           :read-config-file
+           :config-development-p
            :load-config-from-file
 
            :post))

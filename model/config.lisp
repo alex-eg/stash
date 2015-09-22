@@ -22,5 +22,5 @@
        :do (destructuring-bind (key value) entry
              (if (member key slots)
                  (setf (slot-value config key) value)
-                 (format t "Unknown config line: ~s~%" (list key value)))))
+                 (format t "Unknown config key: ~s~%" (list key value)))))
     config))

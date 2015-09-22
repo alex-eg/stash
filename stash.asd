@@ -11,7 +11,7 @@
             :components
             ((:file "model")
              (:file "user")
-             (:file "settings")
+             (:file "config")
              (:file "post")))
 
    (:module "views"

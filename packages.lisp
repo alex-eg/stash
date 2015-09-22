@@ -12,6 +12,8 @@
            :store
 
            :user
+           :user-login
+           :user-password
 
            :config
            :read-config-file

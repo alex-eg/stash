@@ -1,11 +1,11 @@
 (in-package :stash)
 
 (defvar *user*
-  (make-instance 'stash.model::user
+  (make-instance 'user
                  :collection "users"
                  :login "login"
                  :handle "Haru6aTop"
-                 :password (stash.model::string->hash "TpyCuKu")))
+                 :password (string->hash "TpyCuKu")))
 
 (defun install-routes (app)
   (setf (ningle:route app "/")
@@ -17,9 +17,9 @@
             (let ((login (cdr (assoc "login" params :test #'string=)))
                   (password (cdr (assoc "password" params :test #'string=)))
                   (user *user*))
-              (if (and (string= (stash.model::user-login user) login)
-                       (string= (stash.model::string->hash password)
-                                (stash.model::user-password user)))
+              (if (and (string= (user-login user) login)
+                       (string= (string->hash password)
+                                (user-password user)))
                   (progn
                     (let ((s (gethash :session ningle:*context*)))
                       (setf (gethash :authorized s) t))
@@ -28,7 +28,6 @@
   (setf (ningle:route app "/logout")
         #'logout)
   (setf (ningle:route app "/hello/:name")
-
         #'stash.views::hello-page))
 
 (defun generate-css ()

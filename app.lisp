@@ -44,7 +44,8 @@
 (defun start ()
   (generate-css)
   (setf (cl-who:html-mode) :html5)
-  (let ((app (make-instance 'ningle:<app>)))
+  (let ((app (make-instance 'ningle:<app>))
+        (config (make-instance 'config :collection "config")))
     (install-routes app)
     (clack:clackup
      (lack:builder :session

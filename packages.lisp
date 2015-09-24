@@ -16,6 +16,9 @@
            :user-password
 
            :config
+           :static-path
+           :root-path
+
            :read-config-file
            :config-development-p
            :load-config-from-file

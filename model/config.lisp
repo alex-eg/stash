@@ -36,5 +36,5 @@
     config))
 
 (defun load-config-from-file (filename)
-  (let ((config-list (read-file filename)))
+  (let ((config-list (read-config-file filename)))
     (create-config-from-config-list config-list)))

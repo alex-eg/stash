@@ -1,7 +1,8 @@
 (in-package :stash.model)
 
 (defclass config (mongo-storable)
-  ((static-path :accessor static-path)
+  ((collection :initform "config")
+   (static-path :accessor static-path)
    (root-path :accessor root-path)))
 
 (defun read-config-file (filename)
@@ -24,7 +25,7 @@
       t))                               ; if development section is missing, assuming t by default
 
 (defun create-config-from-config-list (config-list)
-  (let* ((config (make-instance 'config :collection "config"))
+  (let* ((config (make-instance 'config))
          (class (class-of config))
          (slots (mapcar #'closer-mop:slot-definition-name
                         (closer-mop:class-slots class))))

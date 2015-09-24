@@ -2,7 +2,6 @@
 
 (defvar *user*
   (make-instance 'user
-                 :collection "users"
                  :login "login"
                  :handle "Haru6aTop"
                  :password (string->hash "TpyCuKu")))

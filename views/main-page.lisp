@@ -12,7 +12,8 @@
                           (:p
                            (str (fmt "~A ~A" k v)))
                           (:br)))
-                   (fmt "Hello there~~")))))))
+                   (fmt "Hello there~~")))))
+        (:p (str (fmt "DPD: ~s" *default-pathname-defaults*)))))
 
 ;;; route "/login"
 (define-view login-page (params)

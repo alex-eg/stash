@@ -8,7 +8,7 @@
        (with-html-output-to-string (,s nil :prologue t :indent t)
          (:head
           (:meta :charset "UTF-8")
-          (:link :rel "stylesheet" :type "text/css" :href "./main.css"))
+          (:link :rel "stylesheet" :type "text/css" :href "./static/main.css"))
          (:body
           ,@body)
          ,s))))

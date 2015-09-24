@@ -15,4 +15,4 @@
      :background "#0088EE"
      :boreder-radius "12px"
      :padding "20px")
-   #P"./main.css"))
+   #P"/static/main.css"))

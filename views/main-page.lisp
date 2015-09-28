@@ -12,8 +12,10 @@
                           (:p
                            (str (fmt "~A ~A" k v)))
                           (:br)))
-                   (fmt "Hello there~~")))))
-        (:p (str (fmt "DPD: ~s" *default-pathname-defaults*)))))
+                   (fmt "Hello there~~"))))))
+  (:p (str (fmt "DPD: ~s" *default-pathname-defaults*)))
+  (:br)
+  (:p (str (fmt "RESPONSE: ~s" ningle:*response*))))
 
 ;;; route "/login"
 (define-view login-page (params)
@@ -22,5 +24,5 @@
                :action "./login"
                :method "post"
                (:label (str "Login")) (:input :type "text" :name "login") (:br)
-               (:label (str "Password")) (:input :type "password" :name "password") (:br)
+               (:label (str "Password")) (:input :type "password" :name "password")
                (:input :type "submit" :value "Log in"))))

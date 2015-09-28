@@ -25,15 +25,17 @@
                     "You're authorized! Hooray!")
                   "I don't know you. Go away."))))
   (setf (ningle:route app "/logout")
-        #'logout)
+        #'(lambda (params)
+            (let ((s (gethash :session ningle:*context*)))
+              (remhash :authorized s))
+            (setf ningle:*response*
+                  (ningle:make-response app 302 '(:location "/")))
+            nil))
   (setf (ningle:route app "/hello/:name")
         #'stash.views::hello-page))
 
 (defun generate-css ()
   (generate-general-css))
-
-(defun logout (params)
-  ())
 
 (defun print-hash (hash)
   (loop

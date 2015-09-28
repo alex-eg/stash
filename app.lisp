@@ -49,6 +49,7 @@
 
 
 (defun start ()
+  (setf *default-pathname-defaults* *source-location*)
   (generate-css)
   (setf (cl-who:html-mode) :html5)
   (let ((app (make-instance 'ningle:<app>))

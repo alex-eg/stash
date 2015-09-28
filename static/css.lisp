@@ -4,7 +4,7 @@
   (with-open-file (css-file (merge-pathnames *default-pathname-defaults* path)
                             :direction :output
                             :if-does-not-exist :create
-                            :if-exists :overwrite)
+                            :if-exists :supersede)
     (lass:write-sheet (lass:compile-sheet lass-blocks)
                       :stream css-file)))
 

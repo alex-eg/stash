@@ -30,7 +30,7 @@
         #'stash.views::hello-page))
 
 (defun generate-css ()
-  (stash.views::generate-general-css))
+  (generate-general-css))
 
 (defun logout (params)
   ())

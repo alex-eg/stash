@@ -1,11 +1,12 @@
 (in-package :stash.views)
 
-(defun generate-css (lass-blocks path)
-  (with-open-file (css-file (merge-pathnames *default-pathname-defaults* path)
+(defun generate-css-and-save-to-file (path &rest lass-blocks)
+  (format t "Generating css to ~s~%" (merge-pathnames path *default-pathname-defaults*))
+  (with-open-file (css-file (merge-pathnames path *default-pathname-defaults*)
                             :direction :output
                             :if-does-not-exist :create
                             :if-exists :supersede)
-    (lass:write-sheet (lass:compile-sheet lass-blocks)
+    (lass:write-sheet (apply #'lass:compile-sheet lass-blocks)
                       :stream css-file)))
 
 (defun generate-general-css ()

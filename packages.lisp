@@ -27,7 +27,8 @@
 
 (defpackage :stash.views
   (:use :cl
-        :cl-who))
+        :cl-who)
+  (:export :generate-general-css))
 
 (defpackage :stash
   (:use :cl

@@ -10,10 +10,36 @@
                       :stream css-file)))
 
 (defun generate-general-css ()
-  (generate-css
+  (generate-css-and-save-to-file
+   #P"static/main.css"
+   '(html
+     :font-family monospace
+     :font-size 130%)
    '(div.login
-     :border "2px solid #8AC007"
-     :background "#0088EE"
-     :boreder-radius "12px"
-     :padding "20px")
-   #P"/static/main.css"))
+     :border 1px solid "#A0A0A0"
+     :margin auto
+     :background "#FAFAFA"
+     :padding 3px
+     :width 506px)
+   '(form ((:and input
+            (:= type (:or text password)))
+           :padding 0px 0px 0px 0px
+           :margin 0px 0px 0px 0px
+           :border 0px
+           :background-color "#F0F0F0"
+           :width 400px))
+   '(form ((:and input (:= type submit))
+           :padding 0px 0px 0px 0px
+           :margin 0px 0px 0px 0px
+           :background-color "#eaeaea"
+           :border solid 1px "#6b0000"
+           :border-left none
+           :border-right none
+           :width 500px))
+   '(form (label
+           :padding 0px 0px 0px 0px
+           :margin 0px 0px 0px 0px
+           :display inline-block
+           :text-align right
+           :float left
+           :width 100px))))

@@ -15,31 +15,36 @@
    '(html
      :font-family monospace
      :font-size 130%)
+   '(input
+     :font-size inherit
+     :font-family monospace)
    '(div.login
      :border 1px solid "#A0A0A0"
      :margin auto
      :background "#FAFAFA"
      :padding 3px
-     :width 506px)
-   '(form ((:and input
-            (:= type (:or text password)))
-           :padding 0px 0px 0px 0px
-           :margin 0px 0px 0px 0px
-           :border 0px
-           :background-color "#F0F0F0"
-           :width 400px))
-   '(form ((:and input (:= type submit))
-           :padding 0px 0px 0px 0px
-           :margin 0px 0px 0px 0px
-           :background-color "#eaeaea"
-           :border solid 1px "#6b0000"
-           :border-left none
-           :border-right none
-           :width 500px))
-   '(form (label
-           :padding 0px 0px 0px 0px
-           :margin 0px 0px 0px 0px
-           :display inline-block
-           :text-align right
-           :float left
-           :width 100px))))
+     :width 600px)
+   '(form
+     ((:and input
+       (:= type (:or text password)))
+      :padding 0px 0px 0px 0px
+      :margin 3px 0px 0px 3px
+      :border 0px
+      :background-color "#F0F0F0"
+      :width 450px))
+   '(form
+     ((:and input (:= type submit))
+      :padding 0px 0px 0px 0px
+      :margin 20px 0px 10px 0px
+      :background-color "#eaeaea"
+      :border solid 1px "#6b0000"
+      :border-left none
+      :border-right none
+      :width 580px))
+   '(form
+     (label
+      :padding 0px 0px 0px 0px
+      :margin 3px 0px 0px 3px
+      :display inline-block
+      :text-align right
+      :width 100px))))

@@ -2,20 +2,7 @@
 
 ;;; route "/"
 (define-view main-page (params)
-  (str (header params))
-  (:div :id "main-area"
-        (:p (str
-             (let ((h (or params ningle:*context*)))
-               (if h
-                   (loop for k being the hash-key of h using (hash-value v)
-                      do (htm
-                          (:p
-                           (str (fmt "~A ~A" k v)))
-                          (:br)))
-                   (fmt "Hello there~~"))))))
-  (:p (str (fmt "DPD: ~s" *default-pathname-defaults*)))
-  (:br)
-  (:p (str (fmt "RESPONSE: ~s" ningle:*response*))))
+  (str(header params)))
 
 ;;; route "/login"
 (define-view login-page (params)

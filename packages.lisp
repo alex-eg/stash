@@ -3,7 +3,8 @@
 (defpackage :stash.utils
   (:use :cl)
   (:export :string->hash
-           :format-hash))
+           :format-hash
+           :format-value))
 
 (defpackage :stash.model
   (:use :cl :stash.utils)

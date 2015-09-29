@@ -6,8 +6,14 @@
     :sha256
     (flexi-streams:string-to-octets string))))
 
+(defun format-value (value)
+  (typecase value
+    (hash-table (format-hash value))
+    (t (with-output-to-string (s)
+         (pprint value)))))
+
 (defun format-hash (hash)
-  (format nil "#HASH(~{~{(~a . ~a)~}~^ ~})"
-          (loop for key being the hash-keys of object
+  (format nil "#HASH(~{~{(~A . ~A)~}~^ ~})"
+          (loop for key being the hash-keys of hash
              using (hash-value value)
              collect (list key value))))

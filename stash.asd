@@ -19,6 +19,7 @@
             :components
             ((:file "view")
              (:file "header")
+             (:file "login")
              (:file "main-page")))
 
    (:module "static"

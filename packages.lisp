@@ -5,7 +5,9 @@
   (:export :string->hash
            :format-hash
            :format-value
-           :current-file-location))
+           :current-file-location
+           :request-param-value
+           :make-response))
 
 (defpackage :stash.model
   (:use :cl :stash.utils)

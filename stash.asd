@@ -28,6 +28,7 @@
             ((:file "css")))
 
    (:file "utils")
+   (:file "controllers")
    (:file "packages")
    (:file "app"))
 

@@ -19,6 +19,7 @@
            :user
            :user-login
            :user-password
+           :user-authorized-p
 
            :config
            :static-path

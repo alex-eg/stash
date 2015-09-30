@@ -13,11 +13,11 @@
   (generate-css-and-save-to-file
    #P"static/main.css"
    '(html
-     :font-family monospace
+     :font-family "MS Mincho"
      :font-size 130%)
    '(input
      :font-size inherit
-     :font-family monospace)
+     :font-family "MS Mincho")
    '(div.login
      :border 1px solid "#A0A0A0"
      :margin auto

@@ -43,11 +43,7 @@
        using (hash-value v) do (format t "~A ~A~%" k v)))
 
 ;;; HARDCODE DEVELOPMENT
-(eval-when (:compile-toplevel)
-  (defparameter *source-location*
-    (make-pathname
-     :directory (pathname-directory *compile-file-truename*)
-     :device (pathname-device *compile-file-truename*))))
+(defvar *source-location* (current-file-location))
 
 
 (defun start ()

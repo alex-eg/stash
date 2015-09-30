@@ -4,7 +4,8 @@
   (:use :cl)
   (:export :string->hash
            :format-hash
-           :format-value))
+           :format-value
+           :current-file-location))
 
 (defpackage :stash.model
   (:use :cl :stash.utils)

@@ -17,3 +17,8 @@
           (loop for key being the hash-keys of hash
              using (hash-value value)
              collect (list key value))))
+
+(defmacro current-file-location ()
+  (make-pathname
+     :directory (pathname-directory *compile-file-truename*)
+     :device (pathname-device *compile-file-truename*)))

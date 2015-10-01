@@ -6,7 +6,9 @@
   (let ((scripts (loop
                     :for entry :in body
                     :if (eql (car entry) :script)
-                    :collect entry)))
+                    :collect entry))
+        (body (remove :script body :test #'eql :key #'car)))
+
     (alexandria:with-gensyms (s)
       `(defun ,name ,parameters
          (with-html-output-to-string (,s nil :prologue t :indent t)

@@ -23,9 +23,7 @@
          (with-html-output-to-string (,s nil :prologue t :indent t)
            (:html (:head
                    (:meta :charset "UTF-8")
-                   (:link :rel "stylesheet" :type "text/css"
-                          :href (format nil "~S/static/main.css"
-                                        (cdr (assoc :host ,(car parameters)))))
+                   (:link :rel "stylesheet" :type "text/css" :href "/static/main.css")
                    ,@css-list
                    ,@scripts)
                   (:body

@@ -16,7 +16,8 @@
             :serial t
             :components
             ((:file "package")
-             (:test-file "mongo"))))
+             (:test-file "mongo")
+             (:test-file "views"))))
 
   :perform (test-op :after (op c)
                     (funcall (intern #.(string :run) :prove) c)))

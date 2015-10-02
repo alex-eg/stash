@@ -21,11 +21,12 @@
       `(defun ,name ,parameters
          (with-html-output-to-string (,s nil :prologue t :indent t)
            (:html (:head
-             (:meta :charset "UTF-8")
-             (:link :rel "stylesheet" :type "text/css" :href "./static/main.css")
-             ,@scripts)
-            (:body
-             ,@body))
+                   (:meta :charset "UTF-8")
+                   (:link :rel "stylesheet" :type "text/css" :href "./static/main.css")
+                   ,@css-list
+                   ,@scripts)
+                  (:body
+                   ,@body))
            ,s)))))
 
 (define-view hello-page (params)

@@ -11,7 +11,8 @@
 (defmacro define-view (name parameters &body body)
   (check-type name symbol "symbol")
   (check-type parameters list "lambda list")
-  (let* ((scripts (collect-tags body :script))
+  (let* ((scripts (loop :for script :in (collect-tags body :script)
+                     :collect `(:script (str ,(cadr script)))))
          (body (remove-tags body :script))
          (css-list (loop
                       :for css :in (collect-tags body :css)

@@ -4,7 +4,7 @@
   (ironclad:byte-array-to-hex-string
    (ironclad:digest-sequence
     :sha256
-    (flexi-streams:string-to-octets string))))
+    (flexi-streams:string-to-octets string :external-format :utf8))))
 
 (defun format-value (value)
   (typecase value

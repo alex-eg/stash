@@ -43,10 +43,11 @@
         (config (load-config-from-file #P"default-config.lisp")))
     (install-routes app)
     (clack:clackup
-     (lack:builder :session
-                   (:static
-                    :path "/static/"
-                    :root (merge-pathnames (static-path config)
-                                           (or *source-location* ; development setting
-                                               (root-path config))))
-                   app))))
+     (lack:builder
+      :session
+      (:static
+       :path "/static/"
+       :root (merge-pathnames (static-path config)
+                              (or *source-location* ; development setting
+                                  (root-path config))))
+      app))))

@@ -6,6 +6,6 @@
     (:div :id "header"
           (:div :id "row"
                 (:div :id "left"
-                      (if (gethash :authorized (gethash :session ningle:*context*))
+                      (if (gethash :authorized (ningle:context :session))
                           (htm (:a :href "/logout" (str "Log out")))
                           (htm (:a :href "/login" (str "Log In")))))))))

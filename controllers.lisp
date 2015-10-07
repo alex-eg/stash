@@ -11,3 +11,9 @@
             (setf (gethash :authorized (ningle:context :session)) t)
             (make-response app 302 '(:location "/")))
           (make-response app 302 '(:location "/login"))))))
+
+(defun make-logout-controller (app)
+  (lambda (params)
+    (let ((s (ningle:context :session)))
+      (remhash :authorized s))
+    (make-response app 302 '(:location "/"))))

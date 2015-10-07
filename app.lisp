@@ -15,6 +15,8 @@
         (make-login-controller app))
   (setf (ningle:route app "/logout")
         (make-logout-controller app))
+  (setf (ningle:route app "/newentry")
+        (logged-in-only app #'stash.views::newentry))
   (setf (ningle:route app "/hello/:name")
         #'stash.views::hello-page))
 

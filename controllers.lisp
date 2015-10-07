@@ -17,3 +17,9 @@
     (let ((s (ningle:context :session)))
       (remhash :authorized s))
     (make-response app 302 '(:location "/"))))
+
+(defmacro logged-in-only (app view-renderer)
+  `(lambda (params)
+     (if (not (gethash :authorized (ningle:context :session) nil))
+         (make-response ,app 404)
+         (funcall ,view-renderer params))))

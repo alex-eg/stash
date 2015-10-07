@@ -20,6 +20,8 @@
             ((:file "view")
              (:file "header")
              (:file "login")
+             (:file "newentry")
+             (:file "hello")
              (:file "main-page")))
 
    (:module "static"

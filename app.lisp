@@ -14,12 +14,7 @@
   (setf (ningle:route app "/login" :method :post)
         (make-login-controller app))
   (setf (ningle:route app "/logout")
-        #'(lambda (params)
-            (let ((s (gethash :session ningle:*context*)))
-              (remhash :authorized s))
-            (setf ningle:*response*
-                  (ningle:make-response app 302 '(:location "/")))
-            nil))
+        (make-logout-controller app))
   (setf (ningle:route app "/hello/:name")
         #'stash.views::hello-page))
 

@@ -15,11 +15,15 @@
            :with-collection
            :with-database-and-collection
            :store
+           :mongo-id
 
            :user
            :user-login
            :user-password
            :user-authorized-p
+
+           :post
+           :markdown->html
 
            :config
            :static-path

@@ -7,4 +7,5 @@
    (body :initarg :body)))
 
 (defun markdown->html (text)
-  (cl-markdown:markdown text))
+  (cl-markdown:markdown
+   (cl-who:escape-string text)))

@@ -4,11 +4,12 @@
   (lambda (params)
     (let ((login (request-param-value params "login"))
           (password (request-param-value params "password"))
-          (user *user*))
+          (user *user*)) ; temporary. later will be queried from DB
       (if (and (string= (user-login user) login)
                (user-authorized-p password user))
           (progn
             (setf (gethash :authorized (ningle:context :session)) t)
+            (setf (ningle:context :current-user) user)
             (make-response app 302 '(:location "/")))
           (make-response app 302 '(:location "/login"))))))
 

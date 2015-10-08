@@ -27,3 +27,13 @@
        (if (not (gethash :authorized (ningle:context :session) nil))
            (funcall ,redirect-function)
            (funcall ,view-renderer params)))))
+
+(defun make-new-post-controller (app)
+  (lambda (params)
+    (let ((body (request-param-value params "post-body"))
+          (caption (request-param-value params "post-caption"))
+          (user-id (mongo-id (ningle:context :current-user))))
+      (store (make-instance 'post
+                            :author-id user-id
+                            :caption caption
+                            :body body)))))

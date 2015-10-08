@@ -20,7 +20,7 @@
 ;;; Model base class (note: maybe use power of MOP and provide more convenient metaclass?)
 
 (defclass mongo-storable ()
-  ((|_id| :documentation "Internal mongo '_id' field")
+  ((|_id| :documentation "Internal mongo '_id' field" :reader mongo-id)
    (collection :initarg :collection :initform (error "Mongo collection must be set")
                :accessor collection)))
 
@@ -34,15 +34,17 @@
 
 (defun get-slot-value-list (object)
   (let* ((class (class-of object))
-         (slot-name-list (remove-if (lambda (slot-name)
-                                      (or (string= slot-name "COLLECTION")
-                                          (string= slot-name "_id")))
-                                    (mapcar #'closer-mop:slot-definition-name
-                                               (closer-mop:class-slots class)))))
-    (mapcar (lambda (slot-name) (cons slot-name
-                                      (or (and (slot-boundp object slot-name)
-                                               (ensure-valid-value (slot-value object slot-name)))
-                                          "")))
+         (slot-name-list (remove-if
+                          (lambda (slot-name)
+                            (or (string= slot-name "COLLECTION")
+                                (string= slot-name "_id")))
+                          (mapcar #'closer-mop:slot-definition-name
+                                  (closer-mop:class-slots class)))))
+    (mapcar (lambda (slot-name)
+              (cons slot-name
+                    (or (and (slot-boundp object slot-name)
+                             (ensure-valid-value (slot-value object slot-name)))
+                        "")))
             slot-name-list)))
 
 (defun ensure-valid-value (object)

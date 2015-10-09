@@ -2,7 +2,7 @@
 
 (define-view main-page (params)
   (esc (format nil "~{~S~%~}~%"
-               (loop :for key :being :the :hash-keys :of ningle:*context*
+               (loop :for key :being :the :hash-keys :of (ningle:context)
                   :using (:hash-value value)
-                  :collect (list key value))))
+                  :collect (list key (format-value value)))))
   (str (header params)))

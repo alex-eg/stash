@@ -22,8 +22,8 @@
 
 (defmacro logged-in-only (app view-renderer &key redirect-function)
   (let ((redirect-function (or redirect-function
-                               (lambda ()
-                                 (make-response app 404)))))
+                               `(lambda ()
+                                  (make-response ,app 404)))))
     `(lambda (params)
        (if (not (gethash :authorized (ningle:context :session) nil))
            (funcall ,redirect-function)

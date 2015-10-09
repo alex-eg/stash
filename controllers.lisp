@@ -4,12 +4,13 @@
   (lambda (params)
     (let ((login (request-param-value params "login"))
           (password (request-param-value params "password"))
-          (user *user*)) ; temporary. later will be queried from DB
+          (user *user*) ; temporary. later will be queried from DB
+          (session (ningle:context :session)))
       (if (and (string= (user-login user) login)
                (user-authorized-p password user))
           (progn
-            (setf (gethash :authorized (ningle:context :session)) t)
-            (setf (ningle:context :current-user) user)
+            (setf (gethash :authorized session) t)
+            (setf (gethash :current-user session) user)
             (make-response app 302 '(:location "/")))
           (make-response app 302 '(:location "/login"))))))
 
@@ -32,7 +33,7 @@
   (lambda (params)
     (let ((body (request-param-value params "post-body"))
           (caption (request-param-value params "post-caption"))
-          (user-id (mongo-id (ningle:context :current-user))))
+          (user-id (mongo-id (gethash :current-user (ningle:context :session)))))
       (store (make-instance 'post
                             :author-id user-id
                             :caption caption

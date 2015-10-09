@@ -4,6 +4,6 @@
   (str (header params))
   (:form :action "./newentry"
          :method "post"
-         (:input :type "text" :name "caption")
-         (:textarea :cols "80" :rows "20" :name "post-body")
-         (:input :type "submit" :value "Create new post")))
+         (:input :type "text" :name "caption") (:br)
+         (:textarea :cols "80" :rows "10" :name "post-body") (:br)
+         (:input :type "submit" :value "Create new post") (:br)))

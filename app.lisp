@@ -55,10 +55,12 @@
 
 (defun start-server (&key (reload-stash nil))
   (when *server*
-    (stop-server *server*))
+    (stop-server))
   (when reload-stash
     (ql:quickload :stash))
   (setf *server* (start)))
 
 (defun stop-server ()
-  (clack:stop *server*))
+  (clack:stop *server*)
+  (setf *server* nil))
+

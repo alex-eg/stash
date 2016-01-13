@@ -4,6 +4,7 @@
   ((collection :initform "posts")
    (author-id :initarg :author-id)
    (caption :initarg :caption)
+   (visibility :initarg :visibility)
    (body :initarg :body)))
 
 (defun markdown->html (text)

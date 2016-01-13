@@ -11,19 +11,19 @@
           (progn
             (setf (gethash :authorized session) t)
             (setf (gethash :current-user session) user)
-            (make-response app 302 '(:location "/")))
-          (make-response app 302 '(:location "/login"))))))
+            (make-response 302 '(:location "/")))
+          (make-response 302 '(:location "/login"))))))
 
 (defun make-logout-controller (app)
   (lambda (params)
     (let ((s (ningle:context :session)))
       (remhash :authorized s))
-    (make-response app 302 '(:location "/"))))
+    (make-response 302 '(:location "/"))))
 
-(defmacro logged-in-only (app view-renderer &key redirect-function)
+(defmacro logged-in-only (view-renderer &key redirect-function)
   (let ((redirect-function (or redirect-function
-                               `(lambda ()
-                                  (make-response ,app 404)))))
+                               (lambda ()
+                                 (make-response 404)))))
     `(lambda (params)
        (if (not (gethash :authorized (ningle:context :session) nil))
            (funcall ,redirect-function)

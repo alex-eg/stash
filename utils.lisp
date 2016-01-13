@@ -26,7 +26,5 @@
 (defun request-param-value (param-list key)
   (cdr (assoc key param-list :test #'string=)))
 
-(defun make-response (app &optional status headers body)
-  (setf ningle:*response*
-        (ningle:make-response app status headers body))
-  nil)
+(defun make-response (status &optional headers body)
+  (list status headers body))

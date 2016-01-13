@@ -18,9 +18,9 @@
   (setf (ningle:route app "/logout")
         (make-logout-controller app))
   (setf (ningle:route app "/newentry")
-        (logged-in-only app #'stash.views::newentry))
+        (logged-in-only #'stash.views::newentry))
   (setf (ningle:route app "/newentry" :method :post)
-        (logged-in-only app (make-new-post-controller app)))
+        (logged-in-only (make-new-post-controller app)))
   (setf (ningle:route app "/hello/:name")
         #'stash.views::hello-page))
 

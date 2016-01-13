@@ -32,7 +32,7 @@
 
 ;;; HARDCODE DEVELOPMENT
 (defvar *source-location* (current-file-location))
-
+(defvar *server* nil)
 
 (defun start ()
   (setf *default-pathname-defaults* *source-location*)
@@ -50,3 +50,13 @@
                               (or *source-location* ; development setting
                                   (root-path config))))
       app))))
+
+(defun start-server (&key (reload-stash nil))
+  (when *server*
+    (stop-server *server*))
+  (when reload-stash
+    (ql:quickload :stash))
+  (setf *server* (start)))
+
+(defun stop-server ()
+  (clack:stop *server*))

@@ -46,4 +46,6 @@
         :stash.utils
         :stash.views
         :stash.model)
-  (:export :start))
+  (:export :start
+           :start-server
+           :stop-server))

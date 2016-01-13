@@ -13,11 +13,9 @@
   (generate-css-and-save-to-file
    #P"static/main.css"
    '(html
-     :font-family "MS Mincho"
-     :font-size 130%)
+     :font-size 110%)
    '(input
-     :font-size inherit
-     :font-family "MS Mincho")
+     :font-size inherit)
    '(div.login
      :border 1px solid "#A0A0A0"
      :margin auto

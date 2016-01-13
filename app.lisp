@@ -6,6 +6,8 @@
                  :handle "Haru6aTop"
                  :password (string->hash "TpyCuKu")))
 
+(setf (slot-value *user* 'stash.model::|_id|) 0)
+
 (defun install-routes (app)
   (setf (ningle:route app "/")
         #'stash.views::main-page)

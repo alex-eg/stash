@@ -32,6 +32,7 @@
    (:file "utils")
    (:file "controllers")
    (:file "packages")
+   (:file "deploy")
    (:file "app"))
 
   :in-order-to ((test-op (test-op stash-test)))

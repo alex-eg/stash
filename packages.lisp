@@ -48,4 +48,5 @@
         :stash.model)
   (:export :start
            :start-server
-           :stop-server))
+           :stop-server
+           :deploy))

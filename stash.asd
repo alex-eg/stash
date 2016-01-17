@@ -22,6 +22,7 @@
              (:file "login")
              (:file "newentry")
              (:file "hello")
+             (:file "posts-list-page")
              (:file "main-page")))
 
    (:module "static"

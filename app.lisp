@@ -22,7 +22,9 @@
   (setf (ningle:route app "/newentry" :method :post)
         (logged-in-only (make-new-post-controller app)))
   (setf (ningle:route app "/hello/:name")
-        #'stash.views::hello-page))
+        #'stash.views::hello-page)
+  (setf (ningle:route app "/posts")
+        #'stash.views::posts-list-page))
 
 (defun generate-css ()
   (generate-general-css))

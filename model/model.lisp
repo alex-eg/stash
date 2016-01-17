@@ -3,7 +3,10 @@
 (defmacro with-database ((var database-name) &body body)
   (alexandria:with-gensyms (client)
     `(mongo:with-client (,client (mongo:create-mongo-client
-                                  :usocket))
+                                  :usocket
+                                  :server (make-instance 'mongo:server-config
+                                                         :port 27017
+                                                         :hostname "127.0.0.1")))
        (let ((,var (make-instance 'mongo:database :mongo-client ,client
                                   :name ,database-name)))
          (progn ,@body)))))
@@ -27,10 +30,9 @@
 (defgeneric store (object database-connection))
 
 (defmethod store ((object mongo-storable) database-connection)
-  (let ((collection (mongo:collection database-connection
-                                      (collection object)))
-        (object-hash (make-slot-value-hash object)))
-    (mongo:insert collection object-hash)))
+  (with-collection (c (collection object) database-connection)
+    (let ((object-hash (make-slot-value-hash object)))
+      (mongo:insert c object-hash))))
 
 (defun get-slot-value-list (object)
   (let* ((class (class-of object))

@@ -22,6 +22,7 @@
              (:file "login")
              (:file "newentry")
              (:file "hello")
+             (:file "posts-list-page")
              (:file "main-page")))
 
    (:module "static"
@@ -32,6 +33,7 @@
    (:file "utils")
    (:file "controllers")
    (:file "packages")
+   (:file "deploy")
    (:file "app"))
 
   :in-order-to ((test-op (test-op stash-test)))

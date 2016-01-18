@@ -34,7 +34,9 @@
     (let ((body (request-param-value params "post-body"))
           (caption (request-param-value params "post-caption"))
           (user-id (mongo-id (gethash :current-user (ningle:context :session)))))
-      (store (make-instance 'post
-                            :author-id user-id
-                            :caption caption
-                            :body body)))))
+      (with-database (db "stash")
+        (store (make-instance 'post
+                              :author-id user-id
+                              :caption caption
+                              :body body)
+               db)))))

@@ -38,6 +38,7 @@
 (defpackage :stash.views
   (:use :cl
         :cl-who
+        :stash.model
         :stash.utils)
   (:export :generate-general-css))
 
@@ -46,4 +47,7 @@
         :stash.utils
         :stash.views
         :stash.model)
-  (:export :start))
+  (:export :start
+           :start-server
+           :stop-server
+           :deploy))

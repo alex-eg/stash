@@ -6,5 +6,6 @@
     (if (gethash :authorized (ningle:context :session))
         (progn
           (htm (:a :href "/logout" (str "Log out"))
+               (:a :href "/posts" (str "All posts"))
                (:a :href "/newentry" (str "New entry"))))
         (progn (htm (:a :href "/login" (str "Log In")))))))

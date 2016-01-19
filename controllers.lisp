@@ -39,4 +39,5 @@
                               :author-id user-id
                               :caption caption
                               :body body)
-               db)))))
+               db)))
+    (make-response 302 '(:location "/"))))

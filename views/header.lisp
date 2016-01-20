@@ -3,9 +3,13 @@
 (defun header (params)
   (declare (ignore params))
   (with-html-output-to-string (s nil :indent t)
-    (if (gethash :authorized (ningle:context :session))
-        (progn
-          (htm (:a :href "/logout" (str "Log out"))
-               (:a :href "/posts" (str "All posts"))
-               (:a :href "/newentry" (str "New entry"))))
-        (progn (htm (:a :href "/login" (str "Log In")))))))
+    (htm
+     (:ul :class "header"
+          (:li (:a :href "/" (str "Home")))
+          (if (gethash :authorized (ningle:context :session))
+              (htm
+               (:li (:a :href "/posts" (str "All posts")))
+               (:li (:a :href "/newentry" (str "New entry")))
+               (:li (:a :href "/logout" (str "Log out"))))
+              (htm
+               (:li (:a :href "/login" (str "Log In")))))))))

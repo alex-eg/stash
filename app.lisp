@@ -65,13 +65,3 @@
 (defun stop-server ()
   (clack:stop *server*)
   (setf *server* nil))
-
-
-;;; Deployment
-
-(defun deploy (path)
-  "Copy files, write paths, initialize database with initial
-user data"
-  nil
-  ; here be uiop operations
-  )

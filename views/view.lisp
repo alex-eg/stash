@@ -27,3 +27,6 @@
                     (:body
                      ,@body))
              ,s))))))
+
+(defmacro user-logged-in ()
+  '(gethash :authorized (ningle:context :session)))

@@ -29,20 +29,38 @@
       :margin 3px 0px 0px 3px
       :border 0px
       :background-color "#F0F0F0"
-      :width 450px))
-   '(form
+      :width 450px)
      ((:and input (:= type submit))
-      :padding 0px 0px 0px 0px
-      :margin 20px 0px 10px 0px
-      :background-color "#eaeaea"
-      :border solid 1px "#6b0000"
-      :border-left none
-      :border-right none
-      :width 580px))
-   '(form
+       :padding 0px 0px 0px 0px
+       :margin 20px 0px 10px 0px
+       :background-color "#eaeaea"
+       :border solid 1px "#6b0000"
+       :border-left none
+       :border-right none
+       :width 580px)
      (label
-      :padding 0px 0px 0px 0px
-      :margin 3px 0px 0px 3px
-      :display inline-block
-      :text-align right
-      :width 100px))))
+       :padding 0px 0px 0px 0px
+       :margin 3px 0px 0px 3px
+       :display inline-block
+       :text-align right
+       :width 100px))
+   '(ul.header
+     :list-style-type "none"
+     :margin 0
+     :padding 0
+     :width 500px
+     :overflow "hidden"
+     :border solid 1px "#6b0000"
+     (li
+      :float "left"
+      :display "inline-block"
+      :border-right solid 1px "#6b0000"
+      (a
+       :display "block"
+       :width 100px
+       :padding 14px 0px 16px 0px
+       :text-align "center"
+       :text-decoration "none"
+       :background-color "#eaeaea")
+      ((:and a :hover)
+       :background-color "#0eeaea")))))

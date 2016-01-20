@@ -5,4 +5,6 @@
   (with-database-and-collection (c "posts" db "stash")
     (let ((posts (mongo:find c)))
       (loop :for p :in posts :do
-         (str (format-hash p))))))
+        (htm
+         (:ul
+          (:li (str (format-hash p)))))))))

@@ -1,8 +1,9 @@
 (in-package :stash.views)
 
 (define-view main-page (params)
-  (esc (format nil "~{~S~%~}~%"
-               (loop :for key :being :the :hash-keys :of (ningle:context)
-                  :using (:hash-value value)
-                  :collect (list key (format-value value)))))
-  (str (header params)))
+  (str (header params))
+  (:br)
+  (:h3 "Welcome")
+  (if (user-logged-in)
+      (htm (:br)
+           (:b "You are logged in!"))))

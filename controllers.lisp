@@ -40,4 +40,4 @@
                               :caption caption
                               :body body)
                db)))
-    (make-response 302 '(:location "/"))))
+    (make-response 302 '(:location "/posts"))))

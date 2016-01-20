@@ -2,8 +2,8 @@
 
 (define-view main-page (params)
   (str (header params))
-  (:br)
-  (:h3 "Welcome")
+  (:hr)
+  (:h4 "Welcome to stash")
   (if (user-logged-in)
       (htm (:br)
-           (:b "You are logged in!"))))
+           (str "You are logged in!"))))

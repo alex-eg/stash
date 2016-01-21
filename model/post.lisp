@@ -8,5 +8,7 @@
    (body :initarg :body)))
 
 (defun markdown->html (text)
-  (cl-markdown:markdown
-   (cl-who:escape-string text)))
+  (with-output-to-string (s)
+    (cl-markdown:markdown
+     (cl-who:escape-string text)
+     :stream s)))

@@ -25,6 +25,8 @@
         #'stash.views::hello-page)
   (setf (ningle:route app "/posts")
         #'stash.views::posts-list-page)
+  (setf (ningle:route app "/posts" :method :post)
+        (make-new-post-controller app))
   (setf (ningle:route app "/script")
         #'stash.views::simple-script))
 

@@ -13,7 +13,7 @@
          (pprint value)))))
 
 (defun format-hash (hash)
-  (format nil "#HASH(~{~{(~A . ~A)~}~^ ~})"
+  (format nil "{~{~{\"~A\" : \"~A\"~}~^ ~}}"
           (loop for key being the hash-keys of hash
              using (hash-value value)
              collect (list key value))))

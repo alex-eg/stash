@@ -54,9 +54,9 @@
      :list-style-type "none"
      :margin 0
      :padding 0
-     :width 500px
      :overflow "hidden"
      :border solid 1px "#6b0000"
+     :border-bottom solid 20px "#000000"
      (li
       :float "left"
       :display "inline-block"

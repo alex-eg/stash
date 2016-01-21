@@ -10,7 +10,7 @@
     (check-type name symbol "symbol")
     (check-type parameters list "lambda list")
     (let* ((scripts (loop :for script :in (collect-tags body :script)
-                          :collect `(:script (str ,(cadr script)))))
+                          :collect `(:script (str (ps ,@(cdr script))))))
            (body (remove-tags body :script))
            (css-list (loop
                        :for css :in (collect-tags body :css)

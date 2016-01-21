@@ -6,6 +6,7 @@
     (htm
      (:ul :class "header"
           (:li (:a :href "/" (str "Home")))
+          (:li (:a :href "/script" (str "Some JS")))
           (if (gethash :authorized (ningle:context :session))
               (htm
                (:li (:a :href "/posts" (str "All posts")))

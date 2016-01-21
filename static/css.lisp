@@ -22,6 +22,12 @@
      :background "#FAFAFA"
      :padding 3px
      :width 600px)
+   '("div#box"
+     :border 1px solid "#000"
+     :padding 100px 100px 0px 0px
+     :display "inline-block"
+     :margin 10px 0px 10px 0px
+     :background-color "#DFF")
    '(form
      ((:and input
        (:= type (:or text password)))

@@ -23,6 +23,7 @@
              (:file "newentry")
              (:file "hello")
              (:file "posts-list-page")
+             (:file "simple-script")
              (:file "main-page")))
 
    (:module "static"

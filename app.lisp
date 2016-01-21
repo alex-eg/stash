@@ -24,7 +24,9 @@
   (setf (ningle:route app "/hello/:name")
         #'stash.views::hello-page)
   (setf (ningle:route app "/posts")
-        #'stash.views::posts-list-page))
+        #'stash.views::posts-list-page)
+  (setf (ningle:route app "/script")
+        #'stash.views::simple-script))
 
 (defun generate-css ()
   (generate-general-css))

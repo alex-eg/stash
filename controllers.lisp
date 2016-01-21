@@ -40,6 +40,6 @@
         (store (make-instance 'post
                               :author-id user-id
                               :caption caption
-                              :body body)
+                              :body (stash.model:markdown->html body))
                db)))
     (make-response 302 '(:location "/posts"))))

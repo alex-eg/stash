@@ -14,20 +14,33 @@
    #P"static/main.css"
    '(html
      :font-size 110%)
+
+   '(body
+     :margin 0)
+
    '(input
      :font-size inherit)
+
    '(div.login
      :border 1px solid "#A0A0A0"
      :margin auto
      :background "#FAFAFA"
      :padding 3px
      :width 600px)
+
+   '(div.post
+     :border 1px solid "#A0A0A0"
+     :background "#FAFAFA"
+     :padding 3px
+     :margin 10px)
+
    '("div#box"
      :border 1px solid "#000"
      :padding 100px 100px 0px 0px
      :display "inline-block"
      :margin 10px 0px 10px 0px
      :background-color "#DFF")
+
    '(form
      ((:and input
        (:= type (:or text password)))
@@ -37,26 +50,27 @@
       :background-color "#F0F0F0"
       :width 450px)
      ((:and input (:= type submit))
-       :padding 0px 0px 0px 0px
-       :margin 20px 0px 10px 0px
-       :background-color "#eaeaea"
-       :border solid 1px "#6b0000"
-       :border-left none
-       :border-right none
-       :width 580px)
+      :padding 0px 0px 0px 0px
+      :margin 20px 0px 10px 0px
+      :background-color "#eaeaea"
+      :border solid 1px "#6b0000"
+      :border-left none
+      :border-right none
+      :width 580px)
      (label
-       :padding 0px 0px 0px 0px
-       :margin 3px 0px 0px 3px
-       :display inline-block
-       :text-align right
-       :width 100px))
+      :padding 0px 0px 0px 0px
+      :margin 3px 0px 0px 3px
+      :display inline-block
+      :text-align right
+      :width 100px))
+
    '(ul.header
      :list-style-type "none"
      :margin 0
      :padding 0
      :overflow "hidden"
      :border solid 1px "#6b0000"
-     :border-bottom solid 20px "#000000"
+     :border-bottom solid 5px "#000000"
      (li
       :float "left"
       :display "inline-block"
@@ -69,4 +83,4 @@
        :text-decoration "none"
        :background-color "#eaeaea")
       ((:and a :hover)
-       :background-color "#0eeaea")))))
+       :background-color "#ffeaea")))))

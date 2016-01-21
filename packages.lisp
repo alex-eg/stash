@@ -39,7 +39,8 @@
   (:use :cl
         :cl-who
         :stash.model
-        :stash.utils)
+        :stash.utils
+        :parenscript)
   (:export :generate-general-css))
 
 (defpackage :stash

@@ -41,6 +41,7 @@
 
   :depends-on (:ningle
                :alexandria
+               :split-sequence
                :ironclad
                :flexi-streams
                :clack

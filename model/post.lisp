@@ -22,6 +22,8 @@
               (write-sequence "&#039;" s))
              ((#\")
               (write-sequence "&quot;" s))
+             ((#\)
+              nil)
              (otherwise
               (format s "~c" char))))
          string)))

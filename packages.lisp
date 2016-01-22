@@ -16,6 +16,7 @@
            :with-database-and-collection
            :store
            :mongo-id
+           :all-collection
 
            :user
            :user-login

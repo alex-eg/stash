@@ -45,6 +45,7 @@
 
 (defpackage :stash
   (:use :cl
+        :anaphora
         :stash.utils
         :stash.views
         :stash.model)

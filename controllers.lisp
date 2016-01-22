@@ -33,9 +33,9 @@
   (lambda (params)
     (let ((body (request-param-value params "post-body"))
           (caption (request-param-value params "post-caption"))
-          (user-id (if (gethash :current-user (ningle:context :session))
-                       (mongo-id (gethash :current-user (ningle:context :session)))
-                       "0")))
+          (user-id (aif (gethash :current-user (ningle:context :session))
+                        (mongo-id it)
+                        "0")))
       (with-database (db "stash")
         (store (make-instance 'post
                               :author-id user-id

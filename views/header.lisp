@@ -11,6 +11,7 @@
               (htm
                (:li (:a :href "/posts" (str "All posts")))
                (:li (:a :href "/newentry" (str "New entry")))
+               (:li (:a :href "/update-settings" (str "Settings")))
                (:li (:a :href "/logout" (str "Log out"))))
               (htm
                (:li (:a :href "/login" (str "Log In")))))))))

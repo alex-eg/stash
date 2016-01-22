@@ -24,6 +24,7 @@
              (:file "hello")
              (:file "posts-list-page")
              (:file "simple-script")
+             (:file "admin")
              (:file "main-page")))
 
    (:module "static"

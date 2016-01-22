@@ -64,6 +64,9 @@
       :text-align right
       :width 100px))
 
+   '(code
+     :font-family "Courier")
+
    '(ul.header
      :list-style-type "none"
      :margin 0

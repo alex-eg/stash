@@ -42,6 +42,7 @@
   :depends-on (:ningle
                :alexandria
                :split-sequence
+               :anaphora
                :ironclad
                :flexi-streams
                :clack

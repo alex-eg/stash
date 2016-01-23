@@ -22,7 +22,7 @@
               (write-sequence "&#039;" s))
              ((#\")
               (write-sequence "&quot;" s))
-             ((#\)
+             ((#\Return)
               nil)
              (otherwise
               (format s "~c" char))))

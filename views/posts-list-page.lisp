@@ -8,8 +8,9 @@
       (loop :for p :in posts :do
          (htm
           (:div :class "post"
-           (:h3 (str (gethash "CAPTION" p)))
-           (str (gethash "BODY" p)))))))
+                (:h3 (str (gethash "CAPTION" p)))
+                (:hr)
+                (str (gethash "BODY" p)))))))
   (:hr)
   (:form :action "./posts"
          :method "post"

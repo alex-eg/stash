@@ -5,8 +5,8 @@
    (defun change-color ()
      (let ((box (chain  document (get-element-by-id "box")))
            (new-color (ps::>> (* (chain |Math| (random))
-                             0xFFFFFF)
-                          0)))
+                                 0xFFFFFF)
+                              0)))
        (setf (@ box style background-color)
              (+ "#" (chain new-color
                       (to-string 16)))))))

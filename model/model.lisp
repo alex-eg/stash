@@ -51,13 +51,13 @@
                             (or (string= slot-name "COLLECTION")
                                 (string= slot-name "_id")))
                           (mapcar #'closer-mop:slot-definition-name
-                                  (closer-mop:class-slots class)))))
-    (mapcar (lambda (slot-name)
-              (cons slot-name
-                    (or (and (slot-boundp object slot-name)
-                             (ensure-valid-value (slot-value object slot-name)))
-                        "")))
-            slot-name-list)))
+                                  (closer-mop:class-slots class))))
+         (slot-value-list))
+    (dolist (slot-name slot-name-list slot-value-list)
+      (and (slot-boundp object slot-name)
+           (push (cons slot-name
+                       (ensure-valid-value (slot-value object slot-name)))
+                 slot-value-list)))))
 
 (defun ensure-valid-value (object)
   (etypecase object

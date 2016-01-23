@@ -46,11 +46,17 @@
 
 (defun make-admin-controller (app)
   (lambda (params)
-    (cond
-      ((request-param-value params "delete-posts")
-       (with-database-and-collection (c "posts" db "stash")
-         (mongo:remove c (all-collection))
-         (make-response 302 '(:location "/posts"))))
-      ((request-param-value params "just-redirect")
-       (make-response 302 '(:location "/")))
-      (t (make-response 200)))))
+    (with-database (db "stash")
+      (cond
+        ((request-param-value params "delete-posts")
+         (remove (all-collection "posts") db)
+         (make-response 302 '(:location "/posts")))
+        ((request-param-value params "delete-emply-posts")
+         (remove (make-instance 'post
+                                :body ""
+                                :caption "")
+                 db)
+         (make-response 302 '(:location "/posts")))
+        ((request-param-value params "just-redirect")
+         (make-response 302 '(:location "/")))
+        (t (make-response 200))))))

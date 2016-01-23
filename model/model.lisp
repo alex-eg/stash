@@ -90,5 +90,6 @@
          (object (make-instance class)))
     'pass))
 
-(defun all-collection ()
-  (make-hash-table))
+(defun all-collection (collection-name)
+  (make-instance 'mongo-storable
+                 :collection collection-name))

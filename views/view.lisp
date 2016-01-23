@@ -6,7 +6,7 @@
                    :if (eql (car entry) tag)
                      :collect entry))
            (remove-tags (body tag)
-             (remove tag body :test #'eql :key #'car)))
+             (cl:remove tag body :test #'eql :key #'car)))
     (check-type name symbol "symbol")
     (check-type parameters list "lambda list")
     (let* ((scripts (loop :for script :in (collect-tags body :script)

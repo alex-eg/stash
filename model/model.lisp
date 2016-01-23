@@ -34,6 +34,16 @@
     (let ((object-hash (make-slot-value-hash object)))
       (mongo:insert c object-hash))))
 
+(defmethod remove ((object mongo-storable) database-connection)
+  (with-collection (c (collection object) database-connection)
+    (let ((object-hash (make-slot-value-hash object)))
+      (mongo:remove c object-hash))))
+
+(defmethod find ((object mongo-storable) database-connection)
+  (with-collection (c (collection object) database-connection)
+    (let ((object-hash (make-slot-value-hash object)))
+      (mongo:find c :query object-hash))))
+
 (defun get-slot-value-list (object)
   (let* ((class (class-of object))
          (slot-name-list (remove-if

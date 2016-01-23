@@ -3,8 +3,8 @@
 (define-view posts-list-page (params)
   (str (header params))
   (:div (str "Now with markdown support!"))
-  (with-database-and-collection (c "posts" db "stash")
-    (let ((posts (mongo:find c)))
+  (with-database (db "stash")
+    (let ((posts (find (all-collection "posts") db)))
       (loop :for p :in posts :do
          (htm
           (:div :class "post"

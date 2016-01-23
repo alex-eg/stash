@@ -11,10 +11,14 @@
 
 (defpackage :stash.model
   (:use :cl :stash.utils)
+  (:shadow :remove
+           :find)
   (:export :with-database
            :with-collection
            :with-database-and-collection
            :store
+           :remove
+           :find
            :mongo-id
            :all-collection
 
@@ -42,6 +46,9 @@
         :stash.model
         :stash.utils
         :parenscript)
+  (:shadowing-import-from :stash.model
+                          :remove
+                          :find)
   (:export :generate-general-css))
 
 (defpackage :stash
@@ -50,6 +57,9 @@
         :stash.utils
         :stash.views
         :stash.model)
+  (:shadowing-import-from :stash.model
+                          :remove
+                          :find)
   (:export :start
            :start-server
            :stop-server

@@ -31,6 +31,12 @@
         #'stash.views::admin-page)
   (setf (ningle:route app "/update-settings" :method :post)
         (make-admin-controller app))
+  (setf (ningle:route app "/paste/create")
+        #'stash.views::create-paste-page)
+  (setf (ningle:route app "/paste/create" :method :post)
+        (make-paste-controller app))
+  (setf (ningle:route app "/paste/*")
+        #'stash.views::show-paste-page)
   (setf (ningle:route app "/script")
         #'stash.views::simple-script))
 

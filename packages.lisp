@@ -30,6 +30,8 @@
            :post
            :markdown->html
 
+           :paste
+
            :config
            :static-path
            :root-path

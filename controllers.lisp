@@ -60,3 +60,19 @@
         ((request-param-value params "just-redirect")
          (make-response 302 '(:location "/")))
         (t (make-response 200))))))
+
+(defun make-paste-controller (app)
+  (lambda (params)
+    (with-database (db "stash")
+      (let* ((caption (request-param-value params "paste-caption"))
+             (body (request-param-value params "paste-body"))
+             (timestamp (get-universal-time))
+             (hash (string->hash (format nil "~a~a" body timestamp))))
+        (store (make-instance 'paste
+                              :caption caption
+                              :body (escape-string body
+                                                   :replace-newlines-with-br t)
+                              :timestamp timestamp
+                              :hash hash)
+               db)
+        (make-response 302 (list :location (format nil "/paste/~a" hash)))))))

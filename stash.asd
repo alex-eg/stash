@@ -12,7 +12,8 @@
             ((:file "model")
              (:file "user")
              (:file "config")
-             (:file "post")))
+             (:file "post")
+             (:file "paste")))
 
    (:module "views"
             :depends-on ("packages")
@@ -24,6 +25,7 @@
              (:file "hello")
              (:file "posts-list-page")
              (:file "simple-script")
+             (:file "paste-page")
              (:file "admin")
              (:file "main-page")))
 

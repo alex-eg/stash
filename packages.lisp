@@ -7,7 +7,8 @@
            :format-value
            :current-file-location
            :request-param-value
-           :make-response))
+           :make-response
+           :escape-string))
 
 (defpackage :stash.model
   (:use :cl :stash.utils)
@@ -51,6 +52,8 @@
   (:shadowing-import-from :stash.model
                           :remove
                           :find)
+  (:shadowing-import-from :stash.utils
+                          :escape-string)
   (:export :generate-general-css))
 
 (defpackage :stash

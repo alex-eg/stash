@@ -28,3 +28,27 @@
 
 (defun make-response (status &optional headers body)
   (list status headers body))
+
+(defun escape-string (string &key (replace-newlines-with-br nil))
+  (with-output-to-string (s)
+    (map nil
+         (lambda (char)
+           (case char
+             ((#\<)
+              (write-sequence "&lt;" s))
+             ((#\>)
+              (write-sequence "&gt;" s))
+             ((#\&)
+              (write-sequence "&amp;" s))
+             ((#\')
+              (write-sequence "&#039;" s))
+             ((#\")
+              (write-sequence "&quot;" s))
+             ((#\Return) nil)
+             ((#\Newline)
+              (if replace-newlines-with-br
+                  (write-sequence "<br>" s)
+                  (format s "~c" char)))
+             (otherwise
+              (format s "~c" char))))
+         string)))

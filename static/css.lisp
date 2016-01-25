@@ -80,7 +80,7 @@
       :border-right solid 1px "#6b0000"
       (a
        :display "block"
-       :width 100px
+       :width 150px
        :padding 14px 0px 16px 0px
        :text-align "center"
        :text-decoration "none"

@@ -19,5 +19,6 @@
     (let* ((hash (cadr (assoc :splat params)))
            (paste (car (find (make-instance 'paste :hash hash)
                              db))))
-      (or (and paste (htm (:pre (:code (fmt "~A" (gethash "BODY" paste))))))
+      (or (and paste (htm (:div :class "code-container"
+                                (:pre (:code (fmt "~A" (gethash "BODY" paste)))))))
           (make-response 404)))))

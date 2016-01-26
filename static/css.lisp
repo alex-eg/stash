@@ -74,6 +74,10 @@
       :text-align right
       :width 100px))
 
+   '(div.code-container
+     :padding-left 20px
+     :padding-top 10px)
+
    '(code
      :font-family "Courier")
 

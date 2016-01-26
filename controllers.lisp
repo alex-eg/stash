@@ -66,12 +66,12 @@
     (with-database (db "stash")
       (let* ((caption (request-param-value params "paste-caption"))
              (body (request-param-value params "paste-body"))
+             (language (request-param-value params "language"))
              (timestamp (get-universal-time))
              (hash (string->hash (format nil "~a~a" body timestamp))))
         (store (make-instance 'paste
                               :caption caption
-                              :body (escape-string body
-                                                   :replace-newlines-with-br t)
+                              :body (pygmentize body language)
                               :timestamp timestamp
                               :hash hash)
                db)

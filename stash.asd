@@ -48,6 +48,7 @@
                :anaphora
                :ironclad
                :flexi-streams
+               :uiop
                :clack
                :lack
                :cl-markdown

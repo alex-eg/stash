@@ -32,6 +32,7 @@
            :markdown->html
 
            :paste
+           :pygmentize
 
            :config
            :static-path

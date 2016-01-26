@@ -6,3 +6,10 @@
    (timestamp :initarg :timestamp)
    (caption :initarg :caption)
    (body :initarg :body)))
+
+(defun pygmentize (code language)
+  (with-input-from-string (s code)
+    (uiop/run-program:run-program
+     (format nil "pygmentize -f html -l ~a" language)
+     :output '(:string :stripped t)
+     :input s)))

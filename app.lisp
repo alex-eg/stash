@@ -41,7 +41,8 @@
         #'stash.views::simple-script))
 
 (defun generate-css ()
-  (generate-general-css))
+  (generate-general-css)
+  (generate-pygments-css "tango"))
 
 (defun print-hash (hash)
   (loop

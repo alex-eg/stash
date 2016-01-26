@@ -54,7 +54,8 @@
                           :find)
   (:shadowing-import-from :stash.utils
                           :escape-string)
-  (:export :generate-general-css))
+  (:export :generate-general-css
+           :generate-pygments-css))
 
 (defpackage :stash
   (:use :cl

@@ -8,37 +8,38 @@
 
 (setf (slot-value *user* 'stash.model::|_id|) 0)
 
+(defmacro install-routes% (app &body routes)
+  `(progn
+     ,@(loop :for r :in routes
+          :collect `(setf (ningle:route ,app ,(car r) ,@(cddr r))
+                          ,(cadr r)))))
+
 (defun install-routes (app)
-  (setf (ningle:route app "/")
-        #'stash.views::main-page)
-  (setf (ningle:route app "/login")
-        #'stash.views::login-page)
-  (setf (ningle:route app "/login" :method :post)
-        (make-login-controller app))
-  (setf (ningle:route app "/logout")
-        (make-logout-controller app))
-  (setf (ningle:route app "/newentry")
-        (logged-in-only #'stash.views::newentry))
-  (setf (ningle:route app "/newentry" :method :post)
-        (logged-in-only (make-new-post-controller app)))
-  (setf (ningle:route app "/hello/:name")
-        #'stash.views::hello-page)
-  (setf (ningle:route app "/posts")
-        #'stash.views::posts-list-page)
-  (setf (ningle:route app "/posts" :method :post)
-        (make-new-post-controller app))
-  (setf (ningle:route app "/update-settings")
-        #'stash.views::admin-page)
-  (setf (ningle:route app "/update-settings" :method :post)
-        (make-admin-controller app))
-  (setf (ningle:route app "/paste/create")
-        #'stash.views::create-paste-page)
-  (setf (ningle:route app "/paste/create" :method :post)
-        (make-paste-controller app))
-  (setf (ningle:route app "/paste/*")
-        #'stash.views::show-paste-page)
-  (setf (ningle:route app "/script")
-        #'stash.views::simple-script))
+  (install-routes% app
+    ;; <route> <function> [ningle:route arguments]*
+    ("/" #'main-page)
+
+    ("/login" #'login-page)
+    ("/login" (make-login-controller app) :method :post)
+
+    ("/logout" (make-logout-controller app))
+
+    ("/newentry" (logged-in-only #'newentry))
+    ("/newentry" (logged-in-only (make-new-post-controller app)) :method :post)
+
+    ("/hello/:name" #'hello-page)
+
+    ("/posts" #'posts-list-page)
+    ("/posts" (make-new-post-controller app) :method :post)
+
+    ("/update-settings" #'admin-page)
+    ("/update-settings" (make-admin-controller app) :method :post)
+
+    ("/paste/create" #'create-paste-page)
+    ("/paste/create" (make-paste-controller app) :method :post)
+
+    ("/paste/*" #'show-paste-page)
+    ("/script" #'simple-script)))
 
 (defun generate-css ()
   (generate-general-css)

@@ -56,7 +56,16 @@
   (:shadowing-import-from :stash.utils
                           :escape-string)
   (:export :generate-general-css
-           :generate-pygments-css))
+           :generate-pygments-css
+
+           :main-page
+           :login-page
+           :hello-page
+           :posts-list-page
+           :admin-page
+           :create-paste-page
+           :show-paste-page
+           :simple-script))
 
 (defpackage :stash
   (:use :cl

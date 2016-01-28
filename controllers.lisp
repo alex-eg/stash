@@ -24,10 +24,11 @@
   (let ((redirect-function (or redirect-function
                                (lambda ()
                                  (make-response 404)))))
-    `(lambda (params)
-       (if (not (gethash :authorized (ningle:context :session) nil))
-           (funcall ,redirect-function)
-           (funcall ,view-renderer params)))))
+    (alexandria:with-gensyms (params)
+      `(lambda (,params)
+         (if (not (gethash :authorized (ningle:context :session) nil))
+             (funcall ,redirect-function)
+             (funcall ,view-renderer ,params))))))
 
 (defun make-new-post-controller (app)
   (lambda (params)

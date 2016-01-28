@@ -95,7 +95,7 @@
       (a
        :display "block"
        :width 150px
-       :padding 14px 0px 16px 0px
+       :padding 4px 0px 6px 0px
        :text-align "center"
        :text-decoration "none"
        :background-color "#eaeaea")

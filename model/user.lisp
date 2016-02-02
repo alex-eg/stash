@@ -6,8 +6,12 @@
    (email :initarg :email)
    (handle :initarg :handle)            ; alternative to login. shown name
    (password :initarg :password :accessor user-password)
+   (adminp :initarg :adminp :initform nil :reader adminp)
    (friend-list :initarg :friend-list)))
 
 (defun user-authorizedp (password user)
   (string= (string->hash password)
            (user-password user)))
+
+(defun user-adminp (user)
+  (adminp user))

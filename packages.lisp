@@ -28,6 +28,7 @@
            :user-login
            :user-password
            :user-authorizedp
+           :user-adminp
 
            :post
            :markdown->html

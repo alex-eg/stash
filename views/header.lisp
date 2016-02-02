@@ -13,6 +13,9 @@
                 (htm
                  (:li (:a :href "/posts" (str "All posts")))
                  (:li (:a :href "/newentry" (str "New entry"))))
+                (if (user-adminp current-user%)
+                    (htm
+                     (:li (:a :href "/admin" (str "Administration")))))
                 (htm (:li (:a :href "/logout" (str "Log out")))))
               (htm
                (:li (:a :href "/login" (str "Log In")))))))))

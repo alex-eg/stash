@@ -4,6 +4,7 @@
   (make-instance 'user
                  :login "login"
                  :handle "Haru6aTop"
+                 :adminp nil
                  :password (string->hash "TpyCuKu")))
 
 (setf (slot-value *user* 'stash.model::|_id|) 0)

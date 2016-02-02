@@ -7,7 +7,7 @@
           (user *user*) ; temporary. later will be queried from DB
           (session (ningle:context :session)))
       (if (and (string= (user-login user) login)
-               (user-authorized-p password user))
+               (user-authorizedp password user))
           (progn
             (setf (gethash :authorized session) t)
             (setf (gethash :current-user session) user)

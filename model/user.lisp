@@ -8,6 +8,6 @@
    (password :initarg :password :accessor user-password)
    (friend-list :initarg :friend-list)))
 
-(defun user-authorized-p (password user)
+(defun user-authorizedp (password user)
   (string= (string->hash password)
            (user-password user)))

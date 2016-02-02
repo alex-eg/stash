@@ -26,7 +26,7 @@
            :user
            :user-login
            :user-password
-           :user-authorized-p
+           :user-authorizedp
 
            :post
            :markdown->html

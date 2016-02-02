@@ -64,7 +64,11 @@
            :login-page
            :hello-page
            :posts-list-page
+
            :admin-page
+           :admin-settings-page
+           :add-user-page
+
            :create-paste-page
            :show-paste-page
            :simple-script))

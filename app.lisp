@@ -33,14 +33,20 @@
     ("/posts" #'posts-list-page)
     ("/posts" (make-new-post-controller app) :method :post)
 
-    ("/update-settings" #'admin-page)
-    ("/update-settings" (make-admin-controller app) :method :post)
-
     ("/paste/create" #'create-paste-page)
     ("/paste/create" (make-paste-controller app) :method :post)
 
     ("/paste/*" #'show-paste-page)
-    ("/script" #'simple-script)))
+
+    ("/script" #'simple-script)
+
+    ("/admin" #'admin-page)
+
+    ("/admin/adduser" #'add-user-page)
+    ("/admin/adduser" #'add-user-controller :method :post)
+
+    ("/admin/settings" (logged-in-only #'admin-settings-page))
+    ("/admin/settings" (make-admin-controller app) :method :post)))
 
 (defun generate-css ()
   (generate-general-css)

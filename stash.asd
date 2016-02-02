@@ -27,6 +27,8 @@
              (:file "simple-script")
              (:file "paste-page")
              (:file "admin")
+             (:file "settings")
+             (:file "add-user")
              (:file "main-page")))
 
    (:module "static"

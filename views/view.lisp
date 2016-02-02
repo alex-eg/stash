@@ -28,5 +28,5 @@
                      ,@body))
              ,s))))))
 
-(defmacro user-logged-in ()
-  '(gethash :authorized (ningle:context :session)))
+(define-symbol-macro current-user%
+    (session :current-user))

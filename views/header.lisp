@@ -8,11 +8,11 @@
           (:li (:a :href "/" (str "Home")))
           (:li (:a :href "/script" (str "Some JS")))
           (:li (:a :href "/paste/create" (str "Code paste")))
-          (if (gethash :authorized (ningle:context :session))
-              (htm
-               (:li (:a :href "/posts" (str "All posts")))
-               (:li (:a :href "/newentry" (str "New entry")))
-               (:li (:a :href "/update-settings" (str "Settings")))
-               (:li (:a :href "/logout" (str "Log out"))))
+          (if current-user%
+              (progn
+                (htm
+                 (:li (:a :href "/posts" (str "All posts")))
+                 (:li (:a :href "/newentry" (str "New entry"))))
+                (htm (:li (:a :href "/logout" (str "Log out")))))
               (htm
                (:li (:a :href "/login" (str "Log In")))))))))

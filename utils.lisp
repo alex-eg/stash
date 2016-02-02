@@ -52,3 +52,9 @@
              (otherwise
               (format s "~c" char))))
          string)))
+
+(defun session (key)
+  (gethash key (ningle:context :session)))
+
+(defun (setf session) (value key)
+  (setf (gethash key (ningle:context :session)) value))

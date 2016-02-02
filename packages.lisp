@@ -8,7 +8,8 @@
            :current-file-location
            :request-param-value
            :make-response
-           :escape-string))
+           :escape-string
+           :session))
 
 (defpackage :stash.model
   (:use :cl :stash.utils)

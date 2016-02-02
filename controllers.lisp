@@ -18,10 +18,13 @@
       (remhash :authorized s))
     (make-response 302 '(:location "/"))))
 
-(defmacro logged-in-only (view-renderer &key redirect-function)
+(defmacro logged-in-only (view-renderer
+                          &key
+                            (default-code 401)
+                            redirect-function)
   (let ((redirect-function (or redirect-function
                                (lambda ()
-                                 (make-response 404)))))
+                                 (make-response default-code)))))
     (alexandria:with-gensyms (params)
       `(lambda (,params)
          (if (not (gethash :authorized (ningle:context :session) nil))

@@ -44,7 +44,21 @@
 (defmethod find ((object mongo-storable) database-connection)
   (with-collection (c (collection object) database-connection)
     (let ((object-hash (make-slot-value-hash object)))
-      (mongo:find c :query object-hash))))
+      (mapcar (alexandria:rcurry #'unpack-hash-to-object object)
+              (mongo:find c :query object-hash)))))
+
+(defun unpack-hash-to-object (hash object)
+  "Function takes hash, which returned from the Mongo, and
+unpacks it to corresponding object, or fails loudly"
+  (let* ((class (class-of object))
+         (hash-alist (alexandria:hash-table-alist hash))
+         (new-object (make-instance class)))
+    (mapc (lambda (entry)
+            (destructuring-bind (slot-name . slot-value) entry
+              (setf (slot-value new-object (intern slot-name 'stash.model))
+                    slot-value)))
+          hash-alist)
+    new-object))
 
 (defun get-slot-value-list (object)
   (let* ((class (class-of object))
@@ -86,11 +100,6 @@
   (map 'simple-vector
        #'ensure-valid-value
        sequence))
-
-(defun hash-to-object (hash class-name-symbol)
-  (let* ((class (intern (symbol-name class-name-symbol) *package*))
-         (object (make-instance class)))
-    'pass))
 
 (defun all-collection (collection-name)
   (make-instance 'mongo-storable

@@ -4,13 +4,14 @@
   (str (header params))
   (:div (str "Now with markdown support!"))
   (with-database (db "stash")
-    (let ((posts (find (all-collection "posts") db)))
+    (let ((posts (find (all-collection "posts" 'stash.model::post
+                                       ) db)))
       (loop :for p :in posts :do
          (htm
           (:div :class "post"
-                (:h3 (str (gethash "CAPTION" p)))
+                (:h3 (str (post-caption p)))
                 (:hr)
-                (str (gethash "BODY" p)))))))
+                (str (post-body p)))))))
   (:hr)
   (:form :action "./posts"
          :method "post"

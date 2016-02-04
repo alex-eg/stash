@@ -2,10 +2,10 @@
 
 (defclass post (mongo-storable)
   ((collection :initform "posts")
-   (author-id :initarg :author-id)
-   (caption :initarg :caption)
-   (visibility :initarg :visibility)
-   (body :initarg :body)))
+   (author-id :initarg :author-id :reader post-author-id)
+   (caption :initarg :caption :reader post-caption)
+   (visibility :initarg :visibility :reader post-visibility)
+   (body :initarg :body :reader post-body)))
 
 (defun markdown->html (text)
   (with-output-to-string (s)

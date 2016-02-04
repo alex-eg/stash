@@ -31,6 +31,10 @@
            :user-adminp
 
            :post
+           :post-author-id
+           :post-caption
+           :post-body
+           :post-visibility
            :markdown->html
 
            :paste

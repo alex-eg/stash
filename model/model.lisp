@@ -28,6 +28,8 @@
                :accessor collection)))
 
 (defgeneric store (object database-connection))
+(defgeneric remove (object database-connection))
+(defgeneric find (object database-connection))
 
 (defmethod store ((object mongo-storable) database-connection)
   (with-collection (c (collection object) database-connection)

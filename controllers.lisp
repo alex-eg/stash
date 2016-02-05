@@ -78,3 +78,13 @@
                               :hash hash)
                db)
         (make-response 302 (list :location (format nil "/paste/~a" hash)))))))
+
+(defun add-user-controller (params)
+  (flet ((get-param (param)
+           (request-param-value param param)))
+    (let ((login (get-param "user-login"))
+          (password (get-param "user-password"))
+          (handle (get-param "user-handle"))
+          (adminp (get-param "user-adminp"))
+          (email (get-param "user-email")))))
+  (make-response 302 '(:location "/posts")))

@@ -2,6 +2,22 @@
 
 (define-view add-user-page (params)
   (str (header params))
+  (:script
+   (defun get (id)
+     (chain document (get-element-by-id id)))
+   (defun check-fields ()
+     (let ((login (get "login"))
+           (pw (get "password"))
+           (pw-confirm (get "password-confirm"))
+           (handle (get "handle"))
+           (email (get "email"))
+           (error-box (get "error-message-text")))
+       (cond
+         ((!= (@ pw value) (@ pw-confirm value))
+          (setf (@ error-box |innerHTML|) "Password didn't match"))
+         (t (setf (@ error-box |innerHTML|) "")))))
+   (defun try-create-user ()
+     (check-fields)))
   (:form :action "/admin/adduser"
          :method "post"
          (:label (str "Login")) (:input :type "text" :name "user-login") (:br)

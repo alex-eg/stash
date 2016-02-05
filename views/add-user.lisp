@@ -18,12 +18,15 @@
          (t (setf (@ error-box |innerHTML|) "")))))
    (defun try-create-user ()
      (check-fields)))
+  (:div
+   (:span :id "error-message-text"))
   (:form :action "/admin/adduser"
          :method "post"
-         (:label (str "Login")) (:input :type "text" :name "user-login") (:br)
+         :id "user-form"
+         (:label (str "Login")) (:input :type "text" :name "user-login" :id "login") (:br)
          (:label (str "Password")) (:input :type "password" :name "user-password" :id "password") (:br)
          (:label (str "Confirm password")) (:input :type "password" :id "password-confirm") (:br)
-         (:label (str "Display name")) (:input :type "text" :name "user-handle") (:br)
+         (:label (str "Display name")) (:input :type "text" :name "user-handle" :id "handle") (:br)
          (:label (str "Admin?")) (:input :type "checkbox" :name "user-adminp") (:br)
-         (:label (str "Email")) (:input :type "text" :name "email") (:br)
-         (:input :type "submit" :name "create-user" :value "Create user") (:br)))
+         (:label (str "Email")) (:input :type "text" :name "user-email" :id "email") (:br)
+         (:input :type "button" :name "create-user" :value "Create user" :onclick "tryCreateUser()") (:br)))

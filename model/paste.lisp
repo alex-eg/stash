@@ -2,7 +2,7 @@
 
 (defclass paste (mongo-storable)
   ((collection :initform "pastes")
-   (hash :initarg :hash :initform (error "Cannot store paste without hash"))
+   (hash :initarg :hash)
    (timestamp :initarg :timestamp)
    (caption :initarg :caption)
    (body :initarg :body)))

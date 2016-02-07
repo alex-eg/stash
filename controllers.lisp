@@ -1,53 +1,125 @@
 (in-package :stash)
+(annot:enable-annot-syntax)
 
-(defun make-login-controller (app)
-  (lambda (params)
-    (let ((login (request-param-value params "login"))
-          (password (request-param-value params "password"))
-          (user *user*)) ; temporary. later will be queried from DB
+(defun current-user ()
+  (let ((username (lucerne-auth:get-userid)))
+    (when username
+      (with-database (db "stash")
+        (find (make-instance 'user
+                             :login username)
+              db)))))
+
+@lucerne:route app "/"
+(lucerne:defview home ()
+  (lucerne:render-template (+main-page.html+) :menu t))
+
+@lucerne:route app "/login"
+(lucerne:defview login-page ()
+  (lucerne:render-template (+login.html+)))
+
+@lucerne:route app (:post "/login")
+(lucerne:defview login ()
+  (lucerne:with-params (login password)
+    (let ((user *user*))      ; temporary. later will be queried from DB
       (if (and (string= (user-login user) login)
                (user-authorizedp password user))
           (progn
-            (setf (session :current-user) user)
-            (make-response 302 '(:location "/")))
-          (make-response 302 '(:location "/login"))))))
+            (lucerne-auth:login login)
+            (lucerne:redirect "/"))
+          (progn (lucerne:redirect "/login"))))))
 
-(defun make-logout-controller (app)
-  (lambda (params)
-    (let ((s (ningle:context :session)))
-      (remhash :authorized s))
-    (make-response 302 '(:location "/"))))
+@lucerne:route app "/logout"
+(lucerne:defview logout ()
+  (when (lucerne-auth:logged-in-p)
+    (lucerne-auth:logout))
+  (lucerne:redirect "/"))
 
-(defmacro logged-in-only (view-renderer
-                          &key
-                            (default-code 401)
-                            redirect-function)
-  (let ((redirect-function (or redirect-function
-                               (lambda ()
-                                 (make-response default-code)))))
-    (alexandria:with-gensyms (params)
-      `(lambda (,params)
-         (if (not (gethash :authorized (ningle:context :session) nil))
-             (funcall ,redirect-function)
-             (funcall ,view-renderer ,params))))))
+@lucerne:route app "/script"
+(lucerne:defview script-page ()
+  (lucerne:render-template
+   (+script-page.html+)
+   :menu t
+   :script-list
+   (list
+    (ps:compile-script
+     '(defun change-color ()
+       (let ((box (chain  document (get-element-by-id "box")))
+             (new-color (ps::>> (* (chain |Math| (random))
+                                   0xFFFFFF)
+                                0)))
+         (setf (@ box style background-color)
+               (+ "#" (chain new-color
+                        (to-string 16))))))))))
 
-(defun make-new-post-controller (app)
-  (lambda (params)
-    (let ((body (request-param-value params "post-body"))
-          (caption (request-param-value params "post-caption"))
-          (user-id (aif (gethash :current-user (ningle:context :session))
+@lucerne:route app "/posts"
+(lucerne:defview posts ()
+  (with-database (db "stash")
+    (lucerne:render-template
+     (+posts.html+)
+     :menu t
+     :post-list (find (all-collection "posts" 'post) db))))
+
+@lucerne:route app (:post "/posts")
+(lucerne:defview add-post ()
+  (lucerne:with-params (post-body post-caption)
+    (let ((user-id (aif (current-user)
                         (mongo-id it)
                         "0")))
       (with-database (db "stash")
         (store (make-instance 'post
                               :author-id user-id
-                              :caption caption
-                              :body (stash.model:markdown->html body))
-               db)))
-    (make-response 302 '(:location "/posts"))))
+                              :caption post-caption
+                              :body (stash.model:markdown->html post-body))
+               db))))
+  (lucerne:redirect "/posts"))
 
-(defun make-admin-controller (app)
-  (lambda (params)
+@lucerne:route app "/paste/add"
+(lucerne:defview add-paste-page ()
+  (lucerne:render-template (+create-paste.html+)
+                           :menu t))
+
+@lucerne:route app (:post "/paste/add")
+(lucerne:defview add-paste ()
+  (lucerne:with-params (caption language body)
+    (with-database (db "stash")
+      (let* ((timestamp (get-universal-time))
+             (hash (string->hash (format nil "~a~a" body timestamp))))
+        (store (make-instance 'paste
+                              :caption caption
+                              :body (pygmentize body language)
+                              :timestamp timestamp
+                              :hash hash)
+               db)
+        (lucerne:redirect (format nil "/paste/~a" hash))))))
+
+@lucerne:route app "/paste/:paste-hash"
+(lucerne:defview paste (paste-hash)
+  (with-database (db "stash")
+    (lucerne:render-template
+     (+paste.html+)
+     :menu t
+     :paste (car
+             (find (make-instance
+                    'paste
+                    :hash paste-hash) db)))))
+
+@lucerne:route app "/admin"
+(lucerne:defview admin ()
+  (lucerne:render-template
+   (+admin.html+)
+   :menu t))
+
+@lucerne:route app "/admin/settings"
+(lucerne:defview settings ()
+  (lucerne:render-template
+   (+settings.html+)
+   :menu t))
+
+@lucerne:route app (:post "/admin/settings")
+(lucerne:defview settings-action ()
+  (lucerne:with-params (delete-posts
+                        delete-empty-posts
+                        just-redirect)
     (with-database (db "stash")
       (cond
         ((request-param-value params "delete-posts")
@@ -63,21 +135,12 @@
          (make-response 302 '(:location "/")))
         (t (make-response 200))))))
 
-(defun make-paste-controller (app)
-  (lambda (params)
-    (with-database (db "stash")
-      (let* ((caption (request-param-value params "paste-caption"))
-             (body (request-param-value params "paste-body"))
-             (language (request-param-value params "language"))
-             (timestamp (get-universal-time))
-             (hash (string->hash (format nil "~a~a" body timestamp))))
-        (store (make-instance 'paste
-                              :caption caption
-                              :body (pygmentize body language)
-                              :timestamp timestamp
-                              :hash hash)
-               db)
-        (make-response 302 (list :location (format nil "/paste/~a" hash)))))))
+@lucerne:route app "/admin/add-user"
+(lucerne:defview admin ()
+  (lucerne:render-template
+   (+add-user.html+)
+   :menu t))
+
 
 (defun add-user-controller (params)
   (flet ((get-param (param)

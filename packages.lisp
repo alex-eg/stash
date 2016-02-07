@@ -9,7 +9,7 @@
            :request-param-value
            :make-response
            :escape-string
-           :session))
+           :relative-path))
 
 (defpackage :stash.model
   (:use :cl :stash.utils)
@@ -52,7 +52,7 @@
 
 (defpackage :stash.views
   (:use :cl
-        :cl-who
+        :lucerne
         :stash.model
         :stash.utils
         :parenscript)
@@ -79,6 +79,7 @@
 
 (defpackage :stash
   (:use :cl
+        :parenscript
         :anaphora
         :stash.utils
         :stash.views
@@ -87,6 +88,7 @@
                           :remove
                           :find)
   (:export :start
+           :app
            :start-server
            :stop-server
            :deploy))

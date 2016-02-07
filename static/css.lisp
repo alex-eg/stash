@@ -1,21 +1,23 @@
 (in-package :stash.views)
 
 (defun generate-pygments-css (style)
-  (with-open-file (css-file (merge-pathnames #P"static/pygments.css" *default-pathname-defaults*)
-                            :direction :output
-                            :if-does-not-exist :create
-                            :if-exists :supersede)
+  (with-open-file (css-file
+                   (relative-path #P"static/pygments.css")
+                   :direction :output
+                   :if-does-not-exist :create
+                   :if-exists :supersede)
     (format css-file
             (uiop/run-program:run-program
              (format nil "pygmentize -f html -S ~a" style)
              :output '(:string :stripped t)))))
 
 (defun generate-css-and-save-to-file (path &rest lass-blocks)
-  (format t "Generating css to ~s~%" (merge-pathnames path *default-pathname-defaults*))
-  (with-open-file (css-file (merge-pathnames path *default-pathname-defaults*)
-                            :direction :output
-                            :if-does-not-exist :create
-                            :if-exists :supersede)
+  (format t "Generating css to ~s~%" (relative-path path))
+  (with-open-file (css-file
+                   (relative-path path)
+                   :direction :output
+                   :if-does-not-exist :create
+                   :if-exists :supersede)
     (lass:write-sheet (apply #'lass:compile-sheet lass-blocks)
                       :stream css-file)))
 

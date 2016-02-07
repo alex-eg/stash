@@ -1,0 +1,11 @@
+<html>
+  {% include "head.html" %}
+  <body>
+    {% if menu %}
+    {% include "menu.html" %}
+    {% endif %}
+
+    {% block content %}
+    {% endblock %}
+  </body>
+</html>

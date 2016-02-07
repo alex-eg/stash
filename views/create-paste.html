@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<form action="/paste/add"
+      method="post">
+  <input type="text" name="caption">
+  <select name="language">
+    <option value="common-lisp">Common Lisp</option>
+    <option value="python">Python</option>
+    <option value="erlang">Erlang</option>
+    <option value="bash">Bash</option>
+    <option value="c++">C++</option>
+    <option value="c">C</option>
+    <option value="lua">Lua</option>
+  </select>
+  <br />
+  <textarea cols="80" rows="10" name="body"></textarea><br />
+  <input type="submit" value="Create new paste"><br />
+</form>
+
+{% endblock %}

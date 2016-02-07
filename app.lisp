@@ -9,82 +9,49 @@
 
 (setf (slot-value *user* 'stash.model::|_id|) 0)
 
-(defmacro install-routes% (app &body routes)
-  `(progn
-     ,@(loop :for r :in routes
-          :collect `(setf (ningle:route ,app ,(car r) ,@(cddr r))
-                          ,(cadr r)))))
+(djula:add-template-directory (relative-path #P"views/"))
 
-(defun install-routes (app)
-  (install-routes% app
-    ;; <route> <function> [ningle:route arguments]*
-    ("/" #'main-page)
+(defmacro compile-templates (template-list)
+  (let ((defparameter-list
+         (mapcar (lambda (sym)
+                   `(defparameter
+                        ,(intern (format nil "+~A+" sym) :stash)
+                      (djula:compile-template*
+                       ,(string-downcase (symbol-name sym)))))
+                 template-list)))
+    `(progn ,@defparameter-list)))
 
-    ("/login" #'login-page)
-    ("/login" (make-login-controller app) :method :post)
+(compile-templates (head.html
+                    base.html
+                    main-page.html
+                    script-page.html
+                    posts.html
+                    login.html
 
-    ("/logout" (make-logout-controller app))
+                    paste.html
+                    create-paste.html
 
-    ("/newentry" (logged-in-only #'newentry))
-    ("/newentry" (logged-in-only (make-new-post-controller app)) :method :post)
-
-    ("/hello/:name" #'hello-page)
-
-    ("/posts" #'posts-list-page)
-    ("/posts" (make-new-post-controller app) :method :post)
-
-    ("/paste/create" #'create-paste-page)
-    ("/paste/create" (make-paste-controller app) :method :post)
-
-    ("/paste/*" #'show-paste-page)
-
-    ("/script" #'simple-script)
-
-    ("/admin" #'admin-page)
-
-    ("/admin/adduser" #'add-user-page)
-    ("/admin/adduser" #'add-user-controller :method :post)
-
-    ("/admin/settings" (logged-in-only #'admin-settings-page))
-    ("/admin/settings" (make-admin-controller app) :method :post)))
+                    admin.html
+                    add-user.html
+                    settings.html))
 
 (defun generate-css ()
   (generate-general-css)
   (generate-pygments-css "tango"))
 
-(defun print-hash (hash)
-  (loop
-     for k being the hash-key of hash
-       using (hash-value v) do (format t "~A ~A~%" k v)))
-
-;;; HARDCODE DEVELOPMENT
-(defvar *source-location* (current-file-location))
-(defvar *server* nil)
-
-(defun start ()
-  (setf *default-pathname-defaults* *source-location*)
-  (generate-css)
-  (setf (cl-who:html-mode) :html5)
-  (let ((app (make-instance 'ningle:<app>))
-        (config (load-config-from-file #P"default-config.lisp")))
-    (install-routes app)
-    (clack:clackup
-     (lack:builder
-      :session
-      (:static
-       :path "/static/"
-       :root (merge-pathnames (static-path config)
-                              (or *source-location* ; development setting
-                                  (root-path config))))
-      app))))
+(lucerne:defapp app
+    :middlewares
+  (clack.middleware.session:<clack-middleware-session>
+   (clack.middleware.static:<clack-middleware-static>
+    :path "/static/"
+    :root (relative-path #P"static/"))))
 
 (defun start-server (&key (reload-stash nil))
-  (when *server*
-    (stop-server))
+  (lucerne:stop app)
   (when reload-stash
     (ql:quickload :stash))
-  (setf *server* (start)))
+  (generate-css)
+  (lucerne:start app))
 
 (defun stop-server ()
-  (clack:stop *server*)
-  (setf *server* nil))
+  (lucerne:stop app))

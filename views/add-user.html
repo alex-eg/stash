@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div>
+  <span id="error-message-text">
+  </span>
+</div>
+<form action="/admin/add-user"
+        method="post" id="user-form">
+  <label>Login</label><input type="text" name="login" id="login" /><br />
+  <label>Password</label><input type="password" name="password" id="password" /><br />
+  <label>Confirm password</label><input type="password" id="password-confirm" /><br />
+  <label>Display name</label><input type="text" name="handle" id="handle" /><br />
+  <label>Admin?</label><input type="checkbox" name="adminp"><br />
+  <label>Email</label><input type="text" name="email" id="email"><br />
+  <input type="button" name="create" value="Create user" onclick="tryCreateUser()" /><br />
+</form>
+{% endblock %}

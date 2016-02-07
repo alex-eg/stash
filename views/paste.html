@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+{% if paste %}
+
+<div class="code-container">
+  <pre>
+    <code>
+      {{ paste.body|safe }}
+    </code>
+  </pre>
+</div>
+
+{% else %}
+<p>
+  Paste not found.
+</p>
+
+{% endif %}
+
+{% endblock %}

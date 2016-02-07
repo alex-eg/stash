@@ -15,36 +15,21 @@
              (:file "post")
              (:file "paste")))
 
-   (:module "views"
-            :depends-on ("packages")
-            :components
-            ((:file "view")
-             (:file "header")
-             (:file "login")
-             (:file "newentry")
-             (:file "hello")
-             (:file "posts-list-page")
-             (:file "simple-script")
-             (:file "paste-page")
-             (:file "admin")
-             (:file "settings")
-             (:file "add-user")
-             (:file "main-page")))
-
    (:module "static"
             :depends-on ("packages")
             :components
             ((:file "css")))
 
    (:file "utils")
-   (:file "controllers")
    (:file "packages")
    (:file "deploy")
-   (:file "app"))
+   (:file "app")
+   (:file "controllers"))
 
   :in-order-to ((test-op (test-op stash-test)))
 
-  :depends-on (:ningle
+  :depends-on (:lucerne
+               :lucerne-auth
                :alexandria
                :split-sequence
                :anaphora
@@ -53,10 +38,11 @@
                :uiop
                :clack
                :lack
+               :cl-json
                :cl-markdown
                :cl-ppcre
                :closer-mop
-               :cl-who                  ; html templating
+               :djula
                :lass                    ; css generation
                :parenscript             ; javascript
                :mongo-cl-driver.usocket))

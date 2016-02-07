@@ -1,0 +1,18 @@
+<head>
+  <meta charset="utf-8">
+  <title>
+    {% if title %}
+    {{ title }} &ndash; stash
+    {% else %}
+    stash
+    {% endif %}
+  </title>
+  <link href="/static/main.css" rel="stylesheet">
+  <link href="/static/pygments.css" rel="stylesheet">
+
+  {% for script in script-list %}
+  <script>
+    {{ script|safe }}
+  </script>
+  {% endfor %}
+</head>

@@ -38,7 +38,7 @@
                :uiop
                :clack
                :lack
-               :cl-json
+               :yason
                :cl-markdown
                :cl-ppcre
                :closer-mop

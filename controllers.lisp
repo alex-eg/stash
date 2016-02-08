@@ -1,5 +1,5 @@
 (in-package :stash)
-(annot:enable-annot-syntax)
+(enable-annot-syntax)
 
 (defun current-user ()
   (let ((username (lucerne-auth:get-userid)))

@@ -55,3 +55,15 @@
 
 (defun relative-path (path)
   (asdf:system-relative-pathname :stash path))
+
+(defun @-dispatcher (stream char)
+  (let ((next-char (peek-char nil stream)))
+    (cond ((or (char= next-char #\Newline)
+               (char= next-char #\Space))
+           'ps:@)
+          (t (annot.syntax:annotation-syntax-reader stream char)))))
+
+(defmacro enable-annot-syntax ()
+  '(eval-when (:compile-toplevel :load-toplevel :execute)
+    (setf *readtable* (copy-readtable))
+    (set-macro-character #\@ #'@-dispatcher)))

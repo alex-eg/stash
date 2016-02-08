@@ -9,7 +9,8 @@
            :request-param-value
            :make-response
            :escape-string
-           :relative-path))
+           :relative-path
+           :enable-annot-syntax))
 
 (defpackage :stash.model
   (:use :cl :stash.utils)

@@ -41,15 +41,15 @@
    :menu t
    :script-list
    (list
-    (ps:compile-script
-     '(defun change-color ()
-       (let ((box (chain  document (get-element-by-id "box")))
-             (new-color (ps::>> (* (chain |Math| (random))
-                                   0xFFFFFF)
-                                0)))
-         (setf (@ box style background-color)
-               (+ "#" (chain new-color
-                        (to-string 16))))))))))
+    (ps
+      (defun change-color ()
+        (let ((box (chain  document (get-element-by-id "box")))
+              (new-color (ps::>> (* (chain |Math| (random))
+                                    0xFFFFFF)
+                                 0)))
+          (setf (@ box style background-color)
+                (+ "#" (chain new-color
+                         (to-string 16))))))))))
 
 @lucerne:route app "/posts"
 (lucerne:defview posts ()

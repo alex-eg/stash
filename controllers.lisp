@@ -141,13 +141,12 @@
    (+add-user.html+)
    :menu t))
 
-
-(defun add-user-controller (params)
-  (flet ((get-param (param)
-           (request-param-value param param)))
-    (let ((login (get-param "user-login"))
-          (password (get-param "user-password"))
-          (handle (get-param "user-handle"))
-          (adminp (get-param "user-adminp"))
-          (email (get-param "user-email")))))
-  (make-response 302 '(:location "/posts")))
+@lucerne:route app (:post "/admin/add-user")
+(lucerne:defview add-user ()
+  (lucerne:with-params (login
+                        password
+                        handle
+                        adminp
+                        email)
+    (format t "~A ~A ~A ~A ~A~%" login password handle adminp email)
+    (lucerne:redirect "/posts")))

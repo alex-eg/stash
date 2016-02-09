@@ -55,8 +55,7 @@
   (:use :cl
         :lucerne
         :stash.model
-        :stash.utils
-        :parenscript)
+        :stash.utils)
   (:shadowing-import-from :stash.model
                           :remove
                           :find)

@@ -65,5 +65,5 @@
 
 (defmacro enable-annot-syntax ()
   '(eval-when (:compile-toplevel :load-toplevel :execute)
-    (setf *readtable* (copy-readtable))
+    (setf *readtable* (copy-readtable nil))
     (set-macro-character #\@ #'@-dispatcher)))

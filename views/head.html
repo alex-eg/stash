@@ -10,7 +10,11 @@
   <link href="/static/main.css" rel="stylesheet">
   <link href="/static/pygments.css" rel="stylesheet">
 
-  {% for script in script-list %}
+  {% for script in script-link-list %}
+  <script src="{{ script }}"></script>
+  {% endfor %}
+
+  {% for script in script-code-list %}
   <script>
     {{ script|safe }}
   </script>

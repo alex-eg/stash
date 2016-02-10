@@ -39,6 +39,7 @@
                :clack
                :lack
                :yason
+               :drakma
                :cl-markdown
                :cl-ppcre
                :closer-mop

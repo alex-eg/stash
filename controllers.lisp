@@ -39,7 +39,8 @@
   (lucerne:render-template
    (+script-page.html+)
    :menu t
-   :script-list
+   :script-link-list '("/static/jquery.js")
+   :script-code-list
    (list
     (ps
       (defun change-color ()
@@ -49,7 +50,13 @@
                                  0)))
           (setf (@ box style background-color)
                 (+ "#" (chain new-color
-                         (to-string 16))))))))))
+                         (to-string 16))))))
+
+      (chain ($ document)
+        (ready (lambda ()
+                 (chain ($ "p.hide")
+                   (click (lambda ()
+                            (chain ($ this) (hide))))))))))))
 
 @lucerne:route app "/posts"
 (lucerne:defview posts ()

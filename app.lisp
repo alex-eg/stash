@@ -51,6 +51,7 @@
   (when reload-stash
     (ql:quickload :stash))
   (generate-css)
+  (download-jquery #P"static/jquery.js")
   (lucerne:start app))
 
 (defun stop-server ()

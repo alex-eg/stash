@@ -10,7 +10,8 @@
            :make-response
            :escape-string
            :relative-path
-           :enable-annot-syntax))
+           :enable-annot-syntax
+           :download-jquery))
 
 (defpackage :stash.model
   (:use :cl :stash.utils)

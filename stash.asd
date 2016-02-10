@@ -18,7 +18,8 @@
    (:module "static"
             :depends-on ("packages")
             :components
-            ((:file "css")))
+            ((:file "css")
+             (:file "js")))
 
    (:file "utils")
    (:file "packages")

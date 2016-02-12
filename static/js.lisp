@@ -1,6 +1,6 @@
 (in-package :stash.utils)
 
-(defun download-jquery (relative-path &key (version "2.2.0") (compressed t))
+(defun download-jquery (path &key (version "2.2.0") (compressed t))
   (flet ((get-jquery-url (version compressed)
            (format nil "http://code.jquery.com/jquery-~a~:[~;.min~].js"
                    version compressed))
@@ -23,7 +23,7 @@
                         (write-sequence array file :end read-bytes)
                         (if (< read-bytes read-size)
                             (return))))))))
-    (let ((jquery-file (relative-path relative-path)))
+    (let ((jquery-file (relative-path path)))
       (unless (probe-file jquery-file)
         (save-stream-to-file (get-stream (get-jquery-url version compressed))
                              jquery-file)))))

@@ -1,6 +1,10 @@
 (in-package :stash.utils)
 
 (defun download-jquery (path &key (version "2.2.0") (compressed t))
+  (format t "Downloading~:[~; compressed~] jquery version ~a to ~s~%"
+          compressed
+          version
+          (relative-path path))
   (flet ((get-jquery-url (version compressed)
            (format nil "http://code.jquery.com/jquery-~a~:[~;.min~].js"
                    version compressed))

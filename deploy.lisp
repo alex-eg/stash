@@ -1,8 +1,11 @@
 (in-package :stash)
 
-(defun deploy (path)
+(defun generate-css ()
+  (generate-general-css #P"static/main.css")
+  (generate-pygments-css "tango" #P"static/pygments.css"))
+
+(defun deploy ()
   "Copy files, write paths, initialize database with initial
 user data"
-  nil
-  ; here be uiop operations
-  )
+  (generate-css)
+  (download-jquery #P"static/jquery.js"))

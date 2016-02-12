@@ -35,10 +35,6 @@
                     add-user.html
                     settings.html))
 
-(defun generate-css ()
-  (generate-general-css)
-  (generate-pygments-css "tango"))
-
 (lucerne:defapp app
     :middlewares
   (clack.middleware.session:<clack-middleware-session>
@@ -50,8 +46,6 @@
   (lucerne:stop app)
   (when reload-stash
     (ql:quickload :stash))
-  (generate-css)
-  (download-jquery #P"static/jquery.js")
   (lucerne:start app))
 
 (defun stop-server ()

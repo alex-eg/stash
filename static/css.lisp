@@ -1,8 +1,8 @@
 (in-package :stash.views)
 
-(defun generate-pygments-css (style)
+(defun generate-pygments-css (style path)
   (with-open-file (css-file
-                   (relative-path #P"static/pygments.css")
+                   (relative-path path)
                    :direction :output
                    :if-does-not-exist :create
                    :if-exists :supersede)
@@ -21,9 +21,9 @@
     (lass:write-sheet (apply #'lass:compile-sheet lass-blocks)
                       :stream css-file)))
 
-(defun generate-general-css ()
+(defun generate-general-css (path)
   (generate-css-and-save-to-file
-   #P"static/main.css"
+   path
    '(html
      :font-size 110%)
 

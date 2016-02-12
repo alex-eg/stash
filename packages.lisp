@@ -88,7 +88,7 @@
   (:shadowing-import-from :stash.model
                           :remove
                           :find)
-  (:export :start
+  (:export :start-app
            :app
            :start-server
            :stop-server

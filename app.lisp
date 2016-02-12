@@ -42,11 +42,16 @@
     :path "/static/"
     :root (relative-path #P"static/"))))
 
-(defun start-server (&key (reload-stash nil))
+(defun start-server ()
   (lucerne:stop app)
-  (when reload-stash
-    (ql:quickload :stash))
   (lucerne:start app))
 
 (defun stop-server ()
   (lucerne:stop app))
+
+(defun start-app (&key (deploy nil) (reload-system nil))
+  (when reload-stash
+    (ql:quickload :stash))
+  (when deploy
+    (delpoy))
+  (start-server))

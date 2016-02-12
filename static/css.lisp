@@ -1,6 +1,7 @@
 (in-package :stash.views)
 
 (defun generate-pygments-css (style path)
+  (format t "Generating css to ~s~%" (relative-path path))
   (with-open-file (css-file
                    (relative-path path)
                    :direction :output

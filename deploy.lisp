@@ -8,4 +8,18 @@
   "Copy files, write paths, initialize database with initial
 user data"
   (generate-css)
-  (download-jquery #P"static/jquery.js"))
+  (download-jquery #P"static/jquery.js")
+  (djula:add-template-directory (relative-path #P"views/"))
+  (compile-templates (head.html
+                      base.html
+                      main-page.html
+                      script-page.html
+                      posts.html
+                      login.html
+
+                      paste.html
+                      create-paste.html
+
+                      admin.html
+                      add-user.html
+                      settings.html)))

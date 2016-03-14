@@ -9,8 +9,6 @@
 
 (setf (slot-value *user* 'stash.model::|_id|) 0)
 
-(djula:add-template-directory (relative-path #P"views/"))
-
 (defmacro compile-templates (template-list)
   (let ((defparameter-list
          (mapcar (lambda (sym)
@@ -20,20 +18,6 @@
                        ,(string-downcase (symbol-name sym)))))
                  template-list)))
     `(progn ,@defparameter-list)))
-
-(compile-templates (head.html
-                    base.html
-                    main-page.html
-                    script-page.html
-                    posts.html
-                    login.html
-
-                    paste.html
-                    create-paste.html
-
-                    admin.html
-                    add-user.html
-                    settings.html))
 
 (lucerne:defapp app
     :middlewares

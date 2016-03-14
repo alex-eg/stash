@@ -14,9 +14,12 @@
            :download-jquery))
 
 (defpackage :stash.model
-  (:use :cl :stash.utils)
+  (:use :cl :stash.utils :closer-mop)
   (:shadow :remove
            :find)
+  (:shadowing-import-from :closer-mop
+                          :standard-method :standard-generic-function
+                          :defmethod :defgeneric :standard-class)
   (:export :with-database
            :with-collection
            :with-database-and-collection

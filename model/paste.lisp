@@ -5,7 +5,8 @@
    (hash :initarg :hash)
    (timestamp :initarg :timestamp)
    (caption :initarg :caption)
-   (body :initarg :body)))
+   (body :initarg :body))
+  (:metaclass mongo-storable-meta))
 
 (defun pygmentize (code language)
   (with-input-from-string (s code)

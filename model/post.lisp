@@ -5,7 +5,8 @@
    (author-id :initarg :author-id :reader post-author-id)
    (caption :initarg :caption :reader post-caption)
    (visibility :initarg :visibility :reader post-visibility)
-   (body :initarg :body :reader post-body)))
+   (body :initarg :body :reader post-body))
+  (:metaclass mongo-storable-meta))
 
 (defun markdown->html (text)
   (with-output-to-string (s)

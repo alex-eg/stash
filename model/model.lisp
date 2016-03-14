@@ -20,12 +20,30 @@
      (let ((,collection (mongo:collection ,database ,collection-name)))
        (progn ,@body))))
 
-;;; Model base class (note: maybe use power of MOP and provide more convenient metaclass?)
+;;; Model base class
+
+(defclass mongo-storable-meta (standard-class)
+  ())
+
+(defmethod validate-superclass ((sub mongo-storable-meta) (sup standard-class))
+  t)
+
+(defmethod finalize-inheritance ((class mongo-storable-meta))
+  (let ((slots (class-direct-slots class)))
+    (if (not
+         (find-if (lambda (slot)
+                    (string= "COLLECTION"
+                             (symbol-name
+                              (slot-definition-name slot))))
+                  slots))
+        (error "COLLECTION slot missing from class ~S" class))))
 
 (defclass mongo-storable ()
   ((|_id| :documentation "Internal mongo '_id' field" :reader mongo-id)
-   (collection :initarg :collection :initform (error "Mongo collection must be set")
-               :accessor collection)))
+   (collection :initform (error "Can't instantiate this class")
+               :accessor collection))
+
+  (:metaclass mongo-storable-meta))
 
 (defgeneric store (object database-connection))
 (defgeneric remove (object database-connection))

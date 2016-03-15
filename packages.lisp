@@ -27,6 +27,7 @@
            :create-index
 
            :store
+           :store-one
            :remove
            :find
            :mongo-id

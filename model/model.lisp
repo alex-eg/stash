@@ -52,6 +52,7 @@
   (:metaclass mongo-storable-meta))
 
 (defgeneric store (object database-connection))
+(defgeneric store-one (object database-connection &key if-exists))
 (defgeneric remove (object database-connection))
 (defgeneric find (object database-connection))
 
@@ -59,6 +60,15 @@
   (with-collection (c (collection object) database-connection)
     (let ((object-hash (make-slot-value-hash object)))
       (mongo:insert c object-hash))))
+
+(defmethod store-one ((object mongo-storable) database-connection
+                      &key (if-exists :nothing))
+  (if (find object database-connection)
+      (ccase if-exists
+        (:nothing)
+        (:update ;todo?
+         ))
+      (store object database-connection)))
 
 (defmethod remove ((object mongo-storable) database-connection)
   (with-collection (c (collection object) database-connection)

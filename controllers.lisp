@@ -20,7 +20,10 @@
 @lucerne:route app (:post "/login")
 (lucerne:defview login ()
   (lucerne:with-params (login password)
-    (let ((user *user*))      ; temporary. later will be queried from DB
+    (let ((user (with-database (db "stash")
+                  (car (find (make-instance 'user
+                                            :login login)
+                             db)))))
       (if (and (string= (user-login user) login)
                (user-authorizedp password user))
           (progn

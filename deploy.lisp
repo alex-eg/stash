@@ -22,4 +22,11 @@ user data"
 
                       admin.html
                       add-user.html
-                      settings.html)))
+                      settings.html))
+  (with-database (db "stash")
+    (store-one (make-instance 'user
+                          :login "login"
+                          :handle "Haru6aTop"
+                          :adminp nil
+                          :password (string->hash "TpyCuKu"))
+           db)))

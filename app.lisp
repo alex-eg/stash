@@ -1,14 +1,5 @@
 (in-package :stash)
 
-(defvar *user*
-  (make-instance 'user
-                 :login "login"
-                 :handle "Haru6aTop"
-                 :adminp nil
-                 :password (string->hash "TpyCuKu")))
-
-(setf (slot-value *user* 'stash.model::|_id|) 0)
-
 (defmacro compile-templates (template-list)
   (let ((defparameter-list
          (mapcar (lambda (sym)

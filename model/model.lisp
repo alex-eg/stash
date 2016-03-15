@@ -135,6 +135,5 @@ unpacks it to corresponding object, or fails loudly"
        #'ensure-valid-value
        sequence))
 
-(defun all-collection (collection-name class)
-  (make-instance class
-                 :collection collection-name))
+(defun all-collection (class)
+  (make-instance class))

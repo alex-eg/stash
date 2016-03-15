@@ -4,6 +4,12 @@
   (generate-general-css #P"static/main.css")
   (generate-pygments-css "tango" #P"static/pygments.css"))
 
+(defun initialize-database ()
+  (with-database (db "stash")
+    (create-index (make-instance 'user)
+                  (plist->hash (list "login" 1))
+                  db)))
+
 (defun deploy ()
   "Copy files, write paths, initialize database with initial
 user data"
@@ -23,6 +29,7 @@ user data"
                       admin.html
                       add-user.html
                       settings.html))
+  (initialize-database)
   (with-database (db "stash")
     (store-one (make-instance 'user
                           :login "login"

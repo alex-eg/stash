@@ -3,8 +3,8 @@
 (defclass user (mongo-storable)
   ((collection :initform "users")
    (login :initarg :login :accessor user-login)
-   (email :initarg :email)
-   (handle :initarg :handle)            ; alternative to login. shown name
+   (email :initarg :email :accessor user-email)
+   (handle :initarg :handle :accessor user-handle)            ; alternative to login. shown name
    (password :initarg :password :accessor user-password)
    (adminp :initarg :adminp :initform nil :reader adminp)
    (friend-list :initarg :friend-list))

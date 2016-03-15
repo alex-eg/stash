@@ -35,6 +35,8 @@
 
            :user
            :user-login
+           :user-email
+           :user-handle
            :user-password
            :user-authorizedp
            :user-adminp

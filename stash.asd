@@ -34,17 +34,17 @@
                :alexandria
                :split-sequence
                :anaphora
-               :ironclad
+               :ironclad                ; crypto
                :flexi-streams
                :uiop
                :clack
                :lack
                :yason
-               :drakma
+               :drakma                  ; http client
                :cl-markdown
                :cl-ppcre
                :closer-mop
-               :djula
+               :djula                   ; templates
                :lass                    ; css generation
                :parenscript             ; javascript
                :mongo-cl-driver.usocket))

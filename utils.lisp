@@ -57,13 +57,21 @@
   (asdf:system-relative-pathname :stash path))
 
 (defun @-dispatcher (stream char)
+  ;; Readtable modification for @-character.
+  ;; It is used in cl-annot, but it also used in cl-js,
+  ;; and we need to distinguish this cases
+  ;; or cl-js will end fucked up
   (let ((next-char (peek-char nil stream)))
-    (cond ((or (char= next-char #\Newline)
-               (char= next-char #\Space))
-           'ps:@)
-          (t (annot.syntax:annotation-syntax-reader stream char)))))
+    (cond
+      ((or (char= next-char #\Newline)
+           (char= next-char #\Space))
+       ;; it's javascript!
+       'ps:@)
+      (t
+       ;; otherwise, by deafult, it's a decorator
+       (annot.syntax:annotation-syntax-reader stream char)))))
 
 (defmacro enable-annot-syntax ()
   '(eval-when (:compile-toplevel :load-toplevel :execute)
-    (setf *readtable* (copy-readtable nil))
+    (setf *readtable* (copy-readtable nil)) ; reset readtable
     (set-macro-character #\@ #'@-dispatcher)))

@@ -136,16 +136,16 @@
                         just-redirect)
     (with-database (db "stash")
       (cond
-        ((request-param-value params "delete-posts")
+        (delete-posts
          (remove (all-collection "posts") db)
          (make-response 302 '(:location "/posts")))
-        ((request-param-value params "delete-emply-posts")
+        (delete-empty-posts
          (remove (make-instance 'post
                                 :body ""
                                 :caption "")
                  db)
          (make-response 302 '(:location "/posts")))
-        ((request-param-value params "just-redirect")
+        (just-redirect
          (make-response 302 '(:location "/")))
         (t (make-response 200))))))
 

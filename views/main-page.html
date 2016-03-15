@@ -1,13 +1,11 @@
 {% extends "base.html" %}
 
 {% block content %}
-<p>
-  <h4>Welcome to stash</h4>
-</p>
+<h4>Welcome to stash</h4>
 
 {% if user %}
 <br />
-<p>You are logged in, {{ user }}!</p>
+<p>You are logged in, {{ user.handle }}!</p>
 {% endif %}
 
 {% endblock %}

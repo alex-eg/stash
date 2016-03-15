@@ -24,9 +24,9 @@
   (lucerne:stop app))
 
 (defun start-app (&key (deploy nil) (reload-system nil))
-  (when reload-stash
+  (when reload-system
     (ql:quickload :stash))
   (when deploy
-    (delpoy))
+    (deploy))
   (stop-server)
   (start-server))

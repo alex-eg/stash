@@ -10,9 +10,17 @@
                              :login username)
               db))))))
 
+(defmacro render-template-with-user (template &rest parameter-plist)
+  `(lucerne:render-template
+    (,template)
+    :user (current-user)
+    ,@parameter-plist))
+
 @lucerne:route app "/"
 (lucerne:defview home ()
-  (lucerne:render-template (+main-page.html+) :menu t))
+  (render-template-with-user
+   +main-page.html+
+   :menu t))
 
 @lucerne:route app "/login"
 (lucerne:defview login-page ()
@@ -40,8 +48,8 @@
 
 @lucerne:route app "/script"
 (lucerne:defview script-page ()
-  (lucerne:render-template
-   (+script-page.html+)
+  (render-template-with-user
+   +script-page.html+
    :menu t
    :script-link-list '("/static/jquery.js")
    :script-code-list
@@ -65,8 +73,8 @@
 @lucerne:route app "/posts"
 (lucerne:defview posts ()
   (with-database (db "stash")
-    (lucerne:render-template
-     (+posts.html+)
+    (render-template-with-user
+     +posts.html+
      :menu t
      :post-list (find (all-collection 'post) db))))
 
@@ -86,8 +94,9 @@
 
 @lucerne:route app "/paste/add"
 (lucerne:defview add-paste-page ()
-  (lucerne:render-template (+create-paste.html+)
-                           :menu t))
+  (render-template-with-user
+   +create-paste.html+
+   :menu t))
 
 @lucerne:route app (:post "/paste/add")
 (lucerne:defview add-paste ()
@@ -106,8 +115,8 @@
 @lucerne:route app "/paste/:paste-hash"
 (lucerne:defview paste (paste-hash)
   (with-database (db "stash")
-    (lucerne:render-template
-     (+paste.html+)
+    (render-template-with-user
+     +paste.html+
      :menu t
      :paste (car
              (find (make-instance
@@ -117,15 +126,15 @@
 @lucerne:route app "/admin"
 @restrict-login app nil
 (lucerne:defview admin ()
-  (lucerne:render-template
-   (+admin.html+)
+  (render-template-with-user
+   +admin.html+
    :menu t))
 
 @lucerne:route app "/admin/settings"
 @restrict-login app nil
 (lucerne:defview settings ()
-  (lucerne:render-template
-   (+settings.html+)
+  (render-template-with-user
+   +settings.html+
    :menu t))
 
 @lucerne:route app (:post "/admin/settings")
@@ -151,9 +160,9 @@
 
 @lucerne:route app "/admin/add-user"
 @restrict-login app nil
-(lucerne:defview admin ()
-  (lucerne:render-template
-   (+add-user.html+)
+(lucerne:defview admin-add-user ()
+  (render-template-with-user
+   +add-user.html+
    :menu t))
 
 @lucerne:route app (:post "/admin/add-user")

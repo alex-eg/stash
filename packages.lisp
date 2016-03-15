@@ -12,6 +12,7 @@
            :relative-path
            :enable-annot-syntax
            :download-jquery
+           :restrict-login
            :plist->hash))
 
 (defpackage :stash.model

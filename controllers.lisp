@@ -115,18 +115,21 @@
                     :hash paste-hash) db)))))
 
 @lucerne:route app "/admin"
+@restrict-login app nil
 (lucerne:defview admin ()
   (lucerne:render-template
    (+admin.html+)
    :menu t))
 
 @lucerne:route app "/admin/settings"
+@restrict-login app nil
 (lucerne:defview settings ()
   (lucerne:render-template
    (+settings.html+)
    :menu t))
 
 @lucerne:route app (:post "/admin/settings")
+@restrict-login app nil
 (lucerne:defview settings-action ()
   (lucerne:with-params (delete-posts
                         delete-empty-posts
@@ -147,12 +150,14 @@
         (t (make-response 200))))))
 
 @lucerne:route app "/admin/add-user"
+@restrict-login app nil
 (lucerne:defview admin ()
   (lucerne:render-template
    (+add-user.html+)
    :menu t))
 
 @lucerne:route app (:post "/admin/add-user")
+@restrict-login app nil
 (lucerne:defview add-user ()
   (lucerne:with-params (login
                         password

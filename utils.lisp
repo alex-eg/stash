@@ -76,6 +76,15 @@
     (setf *readtable* (copy-readtable nil)) ; reset readtable
     (set-macro-character #\@ #'@-dispatcher)))
 
+(annot:defannotation restrict-login (app redirect-form body)
+    (:arity 3 :inline t)
+  (let ((body (cdddr body))
+        (definition (subseq body 0 3)))
+    (append definition
+            `((if (lucerne-auth:logged-in-p)
+                  (progn ,@body)
+                  (lucerne.views:not-found ,app))))))
+
 (defun plist->hash (plist)
   (let ((h (make-hash-table :size (/ (length plist) 2))))
     (mapcar

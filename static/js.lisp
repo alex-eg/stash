@@ -1,6 +1,10 @@
 (in-package :stash.utils)
 
-(defun download-jquery (path &key (version "2.2.0") (compressed t))
+(defun download-jquery (path &key (version "2.2.0") (compressed t) (force nil))
+  (when (probe-file (relative-path path))
+    (format t "File ~s already exists~:[, skipping...~;, but FORCE flag is set!~]~%" path force)
+    (unless force
+      (return-from download-jquery nil)))
   (format t "Downloading~:[~; compressed~] jquery version ~a to ~s~%"
           compressed
           version

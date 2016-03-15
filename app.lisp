@@ -18,7 +18,6 @@
     :root (relative-path #P"static/"))))
 
 (defun start-server ()
-  (lucerne:stop app)
   (lucerne:start app))
 
 (defun stop-server ()
@@ -29,4 +28,5 @@
     (ql:quickload :stash))
   (when deploy
     (delpoy))
+  (stop-server)
   (start-server))

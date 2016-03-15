@@ -68,7 +68,7 @@
     (lucerne:render-template
      (+posts.html+)
      :menu t
-     :post-list (find (all-collection "posts" 'post) db))))
+     :post-list (find (all-collection 'post) db))))
 
 @lucerne:route app (:post "/posts")
 (lucerne:defview add-post ()

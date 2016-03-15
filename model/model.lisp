@@ -20,6 +20,12 @@
      (let ((,collection (mongo:collection ,database ,collection-name)))
        (progn ,@body))))
 
+;;; Database functions
+
+(defun create-index (object keys database)
+  (with-collection (c (collection object) database)
+    (mongo:create-index c keys)))
+
 ;;; Model base class
 
 (defclass mongo-storable-meta (standard-class)

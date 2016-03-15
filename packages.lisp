@@ -23,6 +23,9 @@
   (:export :with-database
            :with-collection
            :with-database-and-collection
+
+           :create-index
+
            :store
            :remove
            :find

@@ -5,9 +5,10 @@
   (let ((username (lucerne-auth:get-userid)))
     (when username
       (with-database (db "stash")
-        (find (make-instance 'user
+        (car (find
+              (make-instance 'user
                              :login username)
-              db)))))
+              db))))))
 
 @lucerne:route app "/"
 (lucerne:defview home ()

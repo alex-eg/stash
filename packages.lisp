@@ -11,7 +11,8 @@
            :escape-string
            :relative-path
            :enable-annot-syntax
-           :download-jquery))
+           :download-jquery
+           :plist->hash))
 
 (defpackage :stash.model
   (:use :cl :stash.utils :closer-mop)

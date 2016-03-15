@@ -75,3 +75,17 @@
   '(eval-when (:compile-toplevel :load-toplevel :execute)
     (setf *readtable* (copy-readtable nil)) ; reset readtable
     (set-macro-character #\@ #'@-dispatcher)))
+
+(defun plist->hash (plist)
+  (let ((h (make-hash-table :size (/ (length plist) 2))))
+    (mapcar
+     (lambda (elem)
+       (let ((key (car elem))
+             (val (cadr elem)))
+         (setf (gethash key h) val)))
+     (loop
+        :for elem :in plist
+        :and prev-elem := nil :then elem
+        :for flag := nil :then (not flag)
+        :if flag :collect (list prev-elem elem)))
+    h))

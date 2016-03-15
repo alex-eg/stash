@@ -35,6 +35,8 @@
            :mongo-id
            :all-collection
 
+           :collection
+
            :user
            :user-login
            :user-email

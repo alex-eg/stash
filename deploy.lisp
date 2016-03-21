@@ -8,6 +8,10 @@
   (with-database (db "stash")
     (create-index (make-instance 'user)
                   (plist->hash (list "login" 1))
+                  db)
+
+    (create-index (make-instance 'paste)
+                  (plist->hash (list "hash" 1))
                   db)))
 
 (defun deploy ()

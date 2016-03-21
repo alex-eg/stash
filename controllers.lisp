@@ -86,20 +86,6 @@
    +create-paste.html+
    :menu t))
 
-@lucerne:route app (:post "/paste/add")
-(lucerne:defview add-paste ()
-  (lucerne:with-params (caption language body)
-    (with-database (db "stash")
-      (let* ((timestamp (get-universal-time))
-             (hash (string->hash (format nil "~a~a" body timestamp))))
-        (store (make-instance 'paste
-                              :caption caption
-                              :body (pygmentize body language)
-                              :timestamp timestamp
-                              :hash hash)
-               db)
-        (lucerne:redirect (format nil "/paste/~a" hash))))))
-
 @lucerne:route app "/paste/:paste-hash"
 (lucerne:defview paste (paste-hash)
   (with-database (db "stash")
@@ -110,6 +96,49 @@
              (find (make-instance
                     'paste
                     :hash paste-hash) db)))))
+
+
+(flet ((paste-hash (body timestamp)
+         (string->hash (format nil "~a~a" body timestamp)))
+
+       (new-id ()
+         (let ((chars "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789"))
+           (coerce (loop :repeat 5
+                      :collect (aref chars
+                                     (random (length chars))))
+                   'string))))
+
+  @lucerne:route app (:post "/paste/add")
+  (lucerne:defview add-paste ()
+    (lucerne:with-params (caption language body)
+      (with-database (db "stash")
+        (let* ((timestamp (get-universal-time))
+               (hash (paste-hash body timestamp)))
+          (store (make-instance 'paste
+                                :caption caption
+                                :body (pygmentize body language)
+                                :timestamp timestamp
+                                :hash hash)
+                 db)
+          (lucerne:redirect (format nil "/paste/~a" hash))))))
+
+  @lucerne:route app (:post "/sp")
+  (lucerne:defview quickpaste ()
+    (lucerne:with-params (s)
+      (with-database (db "stash")
+        (let* ((new-id (loop :for id := (new-id) :then (new-id)
+                          :until (null (find (make-instance 'paste :id id)
+                                             db))
+                          :finally (return id)))
+               (timestamp (get-universal-time))
+               (hash (paste-hash body timestamp)))
+          (store (make-instance 'paste
+                                :body body
+                                :timestamp timestamp
+                                :hash hash
+                                :id id))
+          (lucerne:respond (format nil "http://specter.link/sp/~s" id)
+                           :status 200 :type "text/plain"))))))
 
 ;;; ==============================
 ;;; Admin interface

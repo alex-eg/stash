@@ -5,6 +5,7 @@
    (hash :initarg :hash)
    (timestamp :initarg :timestamp)
    (caption :initarg :caption)
+   (id :initarg :id :initform nil)
    (body :initarg :body))
   (:metaclass mongo-storable-meta))
 

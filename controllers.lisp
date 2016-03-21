@@ -16,6 +16,10 @@
     :user (current-user)
     ,@parameter-plist))
 
+;;; ==============================
+;;; Root, login&logout
+;;; ==============================
+
 @lucerne:route app "/"
 (lucerne:defview home ()
   (render-template-with-user
@@ -46,29 +50,9 @@
     (lucerne-auth:logout))
   (lucerne:redirect "/"))
 
-@lucerne:route app "/script"
-(lucerne:defview script-page ()
-  (render-template-with-user
-   +script-page.html+
-   :menu t
-   :script-link-list '("/static/jquery.js")
-   :script-code-list
-   (list
-    (ps
-      (defun change-color ()
-        (let ((box (chain  document (get-element-by-id "box")))
-              (new-color (ps::>> (* (chain |Math| (random))
-                                    0xFFFFFF)
-                                 0)))
-          (setf (@ box style background-color)
-                (+ "#" (chain new-color
-                         (to-string 16))))))
-
-      (chain ($ document)
-        (ready (lambda ()
-                 (chain ($ "p.hide")
-                   (click (lambda ()
-                            (chain ($ this) (hide))))))))))))
+;;; ==============================
+;;; Posts
+;;; ==============================
 
 @lucerne:route app "/posts"
 (lucerne:defview posts ()
@@ -91,6 +75,10 @@
                               :body (stash.model:markdown->html post-body))
                db))))
   (lucerne:redirect "/posts"))
+
+;;; ==============================
+;;; Paste functions
+;;; ==============================
 
 @lucerne:route app "/paste/add"
 (lucerne:defview add-paste-page ()
@@ -122,6 +110,10 @@
              (find (make-instance
                     'paste
                     :hash paste-hash) db)))))
+
+;;; ==============================
+;;; Admin interface
+;;; ==============================
 
 @lucerne:route app "/admin"
 @restrict-login app nil
@@ -175,3 +167,31 @@
                         email)
     (format t "~A ~A ~A ~A ~A~%" login password handle adminp email)
     (lucerne:redirect "/posts")))
+
+;;; ==============================
+;;; Misc
+;;; ==============================
+
+@lucerne:route app "/script"
+(lucerne:defview script-page ()
+  (render-template-with-user
+   +script-page.html+
+   :menu t
+   :script-link-list '("/static/jquery.js")
+   :script-code-list
+   (list
+    (ps
+      (defun change-color ()
+        (let ((box (chain  document (get-element-by-id "box")))
+              (new-color (ps::>> (* (chain |Math| (random))
+                                    0xFFFFFF)
+                                 0)))
+          (setf (@ box style background-color)
+                (+ "#" (chain new-color
+                         (to-string 16))))))
+
+      (chain ($ document)
+        (ready (lambda ()
+                 (chain ($ "p.hide")
+                   (click (lambda ()
+                            (chain ($ this) (hide))))))))))))

@@ -131,7 +131,7 @@
     (lucerne:with-params (s)
       (with-database (db "stash")
         (let* ((body s)
-               (id (loop :for id := (new-id) :then (new-id)
+               (id (loop :for id := (new-id)
                           :until (null (find (make-instance 'paste :id id)
                                              db))
                           :finally (return id)))

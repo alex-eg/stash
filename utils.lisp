@@ -98,3 +98,11 @@
         :for flag := nil :then (not flag)
         :if flag :collect (list prev-elem elem)))
     h))
+
+(defun read-flexi-stream-to-string (stream)
+  (with-output-to-string (str)
+    (let ((buffer (make-array 2)))
+      (loop
+         :for n := (read-sequence buffer stream)
+         :until (= 0 n)
+         :do (format str (flex:octets-to-string buffer :start 0 :end n))))))

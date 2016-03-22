@@ -13,7 +13,8 @@
            :enable-annot-syntax
            :download-jquery
            :restrict-login
-           :plist->hash))
+           :plist->hash
+           :read-flexi-stream-to-string))
 
 (defpackage :stash.model
   (:use :cl :stash.utils :closer-mop)

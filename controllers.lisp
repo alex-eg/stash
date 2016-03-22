@@ -129,18 +129,17 @@
   @lucerne:route app (:post "/sp")
   (lucerne:defview quickpaste ()
     (lucerne:with-params (s)
-      (print (s))
-      (print (format-hash  (cadr s)))
-      (print (format-hash  (caddr s)))
+      ;; s is multipart/form-data, thus it's a flexi-stream instead of regular
+      ;; simple string
       (with-database (db "stash")
-        (let* ((body s)
+        (let* ((body (read-flexi-stream-to-string (car s)))
                (id (loop :for id := (new-id)
-                          :until (null (find (make-instance 'paste :id id)
-                                             db))
-                          :finally (return id)))
+                      :until (null (find (make-instance 'paste :id id)
+                                         db))
+                      :finally (return id)))
                (timestamp (get-universal-time))
                (hash (paste-hash body timestamp)))
-          (progn (make-instance 'paste
+          (store (make-instance 'paste
                                 :body body
                                 :timestamp timestamp
                                 :hash hash

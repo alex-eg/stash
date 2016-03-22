@@ -130,7 +130,8 @@
   (lucerne:defview quickpaste ()
     (lucerne:with-params (s)
       (with-database (db "stash")
-        (let* ((new-id (loop :for id := (new-id) :then (new-id)
+        (let* ((body s)
+               (id (loop :for id := (new-id) :then (new-id)
                           :until (null (find (make-instance 'paste :id id)
                                              db))
                           :finally (return id)))
@@ -140,8 +141,9 @@
                                 :body body
                                 :timestamp timestamp
                                 :hash hash
-                                :id id))
-          (lucerne:respond (format nil "http://specter.link/sp/~s" id)
+                                :id id)
+                 db)
+          (lucerne:respond (format nil "http://specter.link/sp/~a~%" id)
                            :status 200 :type "text/plain"))))))
 
 ;;; ==============================

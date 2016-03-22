@@ -86,17 +86,21 @@
    +create-paste.html+
    :menu t))
 
-@lucerne:route app "/paste/:paste-hash"
-(lucerne:defview paste (paste-hash)
+@lucerne:route app "/paste/:hash-or-id"
+(lucerne:defview paste (hash-or-id)
   (with-database (db "stash")
-    (render-template-with-user
-     +paste.html+
-     :menu t
-     :paste (car
-             (find (make-instance
-                    'paste
-                    :hash paste-hash) db)))))
-
+    (let ((paste
+           (or
+            (car (find (make-instance
+                        'paste
+                        :hash hash-or-id) db))
+            (car (find (make-instance
+                        'paste
+                        :id hash-or-id) db)))))
+      (render-template-with-user
+       +paste.html+
+       :menu t
+       :paste paste))))
 
 (flet ((paste-hash (body timestamp)
          (string->hash (format nil "~a~a" body timestamp)))

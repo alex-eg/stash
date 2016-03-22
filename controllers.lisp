@@ -129,6 +129,9 @@
   @lucerne:route app (:post "/sp")
   (lucerne:defview quickpaste ()
     (lucerne:with-params (s)
+      (print (s))
+      (print (format-hash  (cadr s)))
+      (print (format-hash  (caddr s)))
       (with-database (db "stash")
         (let* ((body s)
                (id (loop :for id := (new-id)
@@ -137,7 +140,7 @@
                           :finally (return id)))
                (timestamp (get-universal-time))
                (hash (paste-hash body timestamp)))
-          (store (make-instance 'paste
+          (progn (make-instance 'paste
                                 :body body
                                 :timestamp timestamp
                                 :hash hash

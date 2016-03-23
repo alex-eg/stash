@@ -109,7 +109,8 @@
          (let ((chars "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789"))
            (coerce (loop :repeat 5
                       :collect (aref chars
-                                     (random (length chars))))
+                                     (random (length chars)
+                                             (random-state t))))
                    'string))))
 
   @lucerne:route app (:post "/paste/add")

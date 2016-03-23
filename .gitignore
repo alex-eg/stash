@@ -4,3 +4,4 @@
 *.css
 *.js
 *.lx64fsl
+conf.lisp

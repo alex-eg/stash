@@ -57,15 +57,8 @@
            :paste
            :pygmentize
 
-           :config
-           :static-path
-           :root-path
-           :config-domain-name
-           :*config*
-
-           :read-config-file
-           :config-development-p
-           :load-config-from-file
+           :config-get
+           :init-config
 
            :post))
 

@@ -146,7 +146,7 @@
                                 :hash hash
                                 :id id)
                  db)
-          (lucerne:respond (format nil "http://specter.link/paste/~a~%" id)
+          (lucerne:respond (format nil "http://~a/paste/~a~%" (config-get :domain) id)
                            :status 200 :type "text/plain"))))))
 
 ;;; ==============================

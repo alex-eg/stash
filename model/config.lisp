@@ -7,6 +7,9 @@
    (domain :accessor config-domain-name))
   (:metaclass mongo-storable-meta))
 
+(defvar *config* nil
+  "Global config storage object")
+
 (defun read-config-file (filename)
   (with-open-file (file filename :direction :input)
     (loop :for entry := (read file nil :eof)

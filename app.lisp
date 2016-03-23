@@ -28,5 +28,6 @@
     (ql:quickload :stash))
   (when deploy
     (deploy))
+  (setq *config* (load-config-from-file #P"./conf.lisp"))
   (stop-server)
   (start-server))

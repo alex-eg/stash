@@ -8,11 +8,10 @@
   (:metaclass mongo-storable-meta))
 
 (defun read-config-file (filename)
-  (let ((*package* (find-package :stash.model)))
-    (with-open-file (file filename :direction :input)
-      (loop :for entry := (read file nil :eof)
-         :until (eq entry :eof)
-         :collect entry))))
+  (with-open-file (file filename :direction :input)
+    (loop :for entry := (read file nil :eof)
+       :until (eq entry :eof)
+       :collect entry)))
 
 (defmacro do-config-list ((config-list key value) &body body)
   (alexandria:with-gensyms (entry)

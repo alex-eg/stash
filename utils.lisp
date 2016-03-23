@@ -101,7 +101,7 @@
 
 (defun read-flexi-stream-to-string (stream)
   (with-output-to-string (str)
-    (let ((buffer (make-array 2)))
+    (let ((buffer (make-array 1024)))
       (loop
          :for n := (read-sequence buffer stream)
          :until (= 0 n)

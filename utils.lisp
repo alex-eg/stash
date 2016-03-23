@@ -99,6 +99,13 @@
         :if flag :collect (list prev-elem elem)))
     h))
 
+(defun config-list->hash (alist)
+  (let ((hash (make-hash-table :size (length alist))))
+    (loop
+       :for (k v) :in alist
+       :do (setf (gethash k hash) v))
+    hash))
+
 (defun read-flexi-stream-to-string (stream)
   (with-output-to-string (str)
     (let ((buffer (make-array 1024)))

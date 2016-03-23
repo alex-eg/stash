@@ -14,6 +14,7 @@
            :download-jquery
            :restrict-login
            :plist->hash
+           :config-list->hash
            :read-flexi-stream-to-string))
 
 (defpackage :stash.model

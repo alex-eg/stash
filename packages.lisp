@@ -59,6 +59,7 @@
            :config
            :static-path
            :root-path
+           :config-domain-name
 
            :read-config-file
            :config-development-p

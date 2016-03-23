@@ -3,7 +3,8 @@
 (defclass config (mongo-storable)
   ((collection :initform "config")
    (static-path :accessor static-path)
-   (root-path :accessor root-path))
+   (root-path :accessor root-path)
+   (domain :accessor config-domain-name))
   (:metaclass mongo-storable-meta))
 
 (defun read-config-file (filename)

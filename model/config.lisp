@@ -21,13 +21,6 @@
         :do (destructuring-bind (,key ,value) ,entry
               (progn ,@body)))))
 
-(defun config-development-p (config-list)
-  (if (member 'development config-list :key #'car)
-      (cadr (cl:find 'development config-list))
-      t))                               ; if development section is
-                                        ; missing, assuming t by
-                                        ; default
-
 (defun create-config-from-config-list (config-list)
   (let* ((config (make-instance 'config))
          (class (class-of config))

@@ -25,7 +25,8 @@
    (:file "packages")
    (:file "deploy")
    (:file "app")
-   (:file "controllers"))
+   (:file "controllers")
+   (:file "ctl"))
 
   :in-order-to ((test-op (test-op stash-test)))
 
@@ -44,6 +45,7 @@
                :cl-markdown
                :cl-ppcre
                :closer-mop
+               :swank-client            ; for ctl
                :djula                   ; templates
                :lass                    ; css generation
                :parenscript             ; javascript

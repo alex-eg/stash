@@ -45,11 +45,11 @@ user data"
                       settings.html))
   (initialize-database)
   (with-database (db "stash")
-    (let ((initial-user (config-get :initial-user))))
-    (store-one (make-instance 'user
-                          :login (config-get :login initial-user)
-                          :handle (config-get :handle initial-user)
-                          :adminp (config-get :adminp initial-user)
-                          :password (string->hash
-                                     (config-get :password config-get)))
-           db)))
+    (let ((initial-user (config-get :initial-user)))
+      (store-one (make-instance 'user
+                                :login (config-get :login initial-user)
+                                :handle (config-get :handle initial-user)
+                                :adminp (config-get :adminp initial-user)
+                                :password (string->hash
+                                           (config-get :password config-get)))
+                 db))))

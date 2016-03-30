@@ -3,6 +3,8 @@
 {% block content %}
 <h4>Welcome to stash</h4>
 
+<p>Current treasure level is {{ treasure }}</p>
+
 {% if user %}
 <br />
 <p>You are logged in, {{ user.handle }}!</p>

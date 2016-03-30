@@ -24,6 +24,7 @@
 (lucerne:defview home ()
   (render-template-with-user
    +main-page.html+
+   :treasure (random 10000)
    :menu t))
 
 @lucerne:route app "/login"

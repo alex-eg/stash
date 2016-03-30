@@ -4,7 +4,7 @@
   "Global config storage object")
 
 (defun config-get (key &optional conf-list)
-  (if (conf-list)
+  (if conf-list
       (cadr (assoc key conf-list))
       (gethash key *config*)))
 

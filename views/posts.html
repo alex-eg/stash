@@ -10,10 +10,12 @@
 </div>
 {% endfor %}
 <hr />
+{% if user %}
 <form action="/posts"
       method="post">
   <input type="text" name="post-caption" /><br />
   <textarea cols="80" rows="10" name="post-body"></textarea><br />
   <input type="submit" value="Create new post" /><br />
 </form>
+{% endif %}
 {% endblock %}

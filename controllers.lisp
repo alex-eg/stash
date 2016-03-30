@@ -66,16 +66,16 @@
 @lucerne:route app (:post "/posts")
 (lucerne:defview add-post ()
   (lucerne:with-params (post-body post-caption)
-    (let ((user-id (aif (current-user)
-                        (mongo-id it)
-                        "0")))
-      (with-database (db "stash")
-        (store (make-instance 'post
-                              :author-id user-id
-                              :caption post-caption
-                              :body (stash.model:markdown->html post-body))
-               db))))
-  (lucerne:redirect "/posts"))
+    (if (not (current-user))
+	(make-response 403)
+	(let ((user-id (mongo-id (current-user))))
+	  (with-database (db "stash")
+	    (store (make-instance 'post
+				  :author-id user-id
+				  :caption post-caption
+				  :body (stash.model:markdown->html post-body))
+		   db))
+	  (lucerne:redirect "/posts")))))
 
 ;;; ==============================
 ;;; Paste functions

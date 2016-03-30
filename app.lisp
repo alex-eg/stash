@@ -23,10 +23,10 @@
 (defun start-app (&key (deploy nil) (reload-system nil))
   (when reload-system
     (ql:quickload :stash))
+  (init-config (relative-path #P"conf.lisp"))
   (when deploy
     (deploy))
   (unless *swank-started*
     (start-swank))
-  (init-config (relative-path #P"conf.lisp"))
   (stop-server)
   (start-server))

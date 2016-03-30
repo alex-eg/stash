@@ -51,5 +51,5 @@ user data"
                                 :handle (config-get :handle initial-user)
                                 :adminp (config-get :adminp initial-user)
                                 :password (string->hash
-                                           (config-get :password config-get)))
+                                           (config-get :password initial-user)))
                  db))))

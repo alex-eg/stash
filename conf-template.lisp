@@ -4,6 +4,11 @@
 
 (:domain "example.com")
 (:development nil)
+(:initial-user
+ (:login "Teapot")
+ (:handle "Dummy")
+ (:adminp nil)
+ (:password "very-secret"))
 
 (:other-thing
  (a b c d e))

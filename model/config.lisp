@@ -3,8 +3,10 @@
 (defvar *config* nil
   "Global config storage object")
 
-(defun config-get (key)
-  (gethash key *config*))
+(defun config-get (key &optional conf-list)
+  (if (conf-list)
+      (cadr (assoc key conf-list))
+      (gethash key *config*)))
 
 (defun (setf config-get) (new-value key)
   (setf (gethash key *config*) new-value))

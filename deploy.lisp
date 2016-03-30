@@ -1,5 +1,15 @@
 (in-package :stash)
 
+(defmacro compile-templates (template-list)
+  (let ((defparameter-list
+         (mapcar (lambda (sym)
+                   `(defparameter
+                        ,(intern (format nil "+~A+" sym) :stash)
+                      (djula:compile-template*
+                       ,(string-downcase (symbol-name sym)))))
+                 template-list)))
+    `(progn ,@defparameter-list)))
+
 (defun generate-css ()
   (generate-general-css #P"static/main.css")
   (generate-pygments-css "tango" #P"static/pygments.css"))

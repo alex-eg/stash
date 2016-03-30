@@ -1,20 +1,8 @@
 <ul class="header">
   <li><a href="/">Home</a></li>
-  <li><a href="/script">Some JS</a></li>
   <li><a href="/paste/add">Code paste</a></li>
-  {% if user %}
-
   <li><a href="/posts">All posts</a></li>
-
-      {% if user.adminp %}
-      <li><a href="/admin">Administration</a></li>
-      {% endif %}
-
-  <li><a href="/logout">Log out</a></li>
-
-  {% else %}
-
-  <li><a href="/login">Log In</a></li>
-
+  {% if user.adminp %}
+  <li><a href="/admin">Administration</a></li>
   {% endif %}
 </ul>

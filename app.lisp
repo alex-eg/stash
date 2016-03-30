@@ -10,8 +10,7 @@
 (defvar *swank-started* nil)
 (defun start-swank ()
   (let ((swank:*use-dedicated-output-stream* nil))
-    (swank:create-server :coding-system "utf-8-unix"
-                         :dont-close t
+    (swank:create-server :dont-close t
                          :port 4008))
   (setq *swank-started* t))
 

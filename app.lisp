@@ -20,13 +20,15 @@
 (defun stop-server ()
   (lucerne:stop app))
 
-(defun start-app (&key (deploy nil) (reload-system nil))
+(defun start-app (&key (deploy nil) (reload-system nil)
+                    (start-swank nil))
   (when reload-system
     (ql:quickload :stash))
   (init-config (relative-path #P"conf.lisp"))
   (when deploy
     (deploy))
-  (unless *swank-started*
-    (start-swank))
+  (when start-swank
+    (unless *swank-started*
+      (start-swank)))
   (stop-server)
   (start-server))

@@ -48,9 +48,9 @@
              ((#\Newline)
               (if replace-newlines-with-br
                   (write-sequence "<br>" s)
-                  (format s "~c" char)))
+                  (princ char s)))
              (otherwise
-              (format s "~c" char))))
+              (princ char s))))
          string)))
 
 (defun relative-path (path)
@@ -112,4 +112,4 @@
       (loop
          :for n := (read-sequence buffer stream)
          :until (= 0 n)
-         :do (format str (flex:octets-to-string buffer :start 0 :end n))))))
+         :do (princ (flex:octets-to-string buffer :start 0 :end n) str)))))

@@ -7,6 +7,22 @@
     :path "/static/"
     :root (relative-path #P"static/"))))
 
+(defun compile-templates ()
+  (djula:add-template-directory (relative-path #P"views/"))
+  (compile-templates% (head.html
+                       base.html
+                       main-page.html
+                       script-page.html
+                       posts.html
+                       login.html
+
+                       paste.html
+                       create-paste.html
+
+                       admin.html
+                       add-user.html
+                       settings.html)))
+
 (defvar *swank-started* nil)
 (defun start-swank ()
   (let ((swank:*use-dedicated-output-stream* nil))
@@ -25,6 +41,7 @@
   (when reload-system
     (ql:quickload :stash))
   (init-config (relative-path #P"conf.lisp"))
+  (compile-templates)
   (when deploy
     (deploy))
   (when start-swank

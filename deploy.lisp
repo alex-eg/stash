@@ -1,6 +1,6 @@
 (in-package :stash)
 
-(defmacro compile-templates (template-list)
+(defmacro compile-templates% (template-list)
   (let ((defparameter-list
          (mapcar (lambda (sym)
                    `(defparameter
@@ -29,20 +29,6 @@
 user data"
   (generate-css)
   (download-jquery #P"static/jquery.js")
-  (djula:add-template-directory (relative-path #P"views/"))
-  (compile-templates (head.html
-                      base.html
-                      main-page.html
-                      script-page.html
-                      posts.html
-                      login.html
-
-                      paste.html
-                      create-paste.html
-
-                      admin.html
-                      add-user.html
-                      settings.html))
   (initialize-database)
   (with-database (db "stash")
     (let ((initial-user (config-get :initial-user)))

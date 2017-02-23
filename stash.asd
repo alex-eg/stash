@@ -47,4 +47,5 @@
                :djula                   ; templates
                :lass                    ; css generation
                :parenscript             ; javascript
-               :mongo-cl-driver.usocket))
+               :crane
+               ))

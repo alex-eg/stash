@@ -33,7 +33,7 @@
                :lucerne-auth
                :alexandria
                :split-sequence
-               :anaphora
+               :anaphora                ; anaphoric macros
                :ironclad                ; crypto
                :flexi-streams
                :uiop

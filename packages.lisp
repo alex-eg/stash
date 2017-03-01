@@ -11,7 +11,6 @@
            :escape-string
            :relative-path
            :enable-annot-syntax
-           :download-jquery
            :restrict-login
            :plist->hash
            :config-list->hash

@@ -28,7 +28,6 @@
   "Copy files, write paths, initialize database with initial
 user data"
   (generate-css)
-  (download-jquery #P"static/jquery.js")
   (initialize-database)
   (with-database (db "stash")
     (let ((initial-user (config-get :initial-user)))

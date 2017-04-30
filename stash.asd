@@ -9,11 +9,10 @@
   ((:module "model"
             :depends-on ("packages")
             :components
-            ((:file "model")
+            ((:file "config")
+             (:file "paste")
              (:file "user")
-             (:file "config")
-             (:file "post")
-             (:file "paste")))
+             (:file "post")))
 
    (:module "static"
             :depends-on ("packages")
@@ -47,5 +46,4 @@
                :djula                   ; templates
                :lass                    ; css generation
                :parenscript             ; javascript
-               :crane
-               ))
+               :crane))

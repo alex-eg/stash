@@ -1,5 +1,22 @@
 (in-package :stash.model)
 
+(eval-when (:compile-toplevel :load-toplevel :execute)
+  (progn
+    (defun connect-database ()
+      (crane:setup
+       :migrations-directory (asdf:system-relative-pathname
+                              :stash #P"./migrations")
+       :databases
+       '(:main
+         (:type :postgres
+          :name "stash"
+          :user "stash"
+          :pass "stash")))
+      (connect))
+    (connect-database)))
+
+
+
 (defvar *config* nil
   "Global config storage object")
 

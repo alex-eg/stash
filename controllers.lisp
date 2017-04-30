@@ -4,11 +4,7 @@
 (defun current-user ()
   (let ((username (lucerne-auth:get-userid)))
     (when username
-      (with-database (db "stash")
-        (car (find
-              (make-instance 'user
-                             :login username)
-              db))))))
+      (crane:single! 'user :login username))))
 
 (defmacro render-template-with-user (template &rest parameter-plist)
   `(lucerne:render-template
@@ -34,10 +30,9 @@
 @lucerne:route app (:post "/login")
 (lucerne:defview login ()
   (lucerne:with-params (login password)
-    (let ((user (with-database (db "stash")
-                  (car (find (make-instance 'user
-                                            :login login)
-                             db)))))
+    (let ((user (crane:single!
+                 'user
+                 :login login)))
       (if (and (string= (user-login user) login)
                (user-authorizedp password user))
           (progn
@@ -57,25 +52,22 @@
 
 @lucerne:route app "/posts"
 (lucerne:defview posts ()
-  (with-database (db "stash")
-    (render-template-with-user
-     +posts.html+
-     :menu t
-     :post-list (find (all-collection 'post) db))))
+  (render-template-with-user
+   +posts.html+
+   :menu t
+   :post-list (crane:filter 'post)))
 
 @lucerne:route app (:post "/posts")
 (lucerne:defview add-post ()
   (lucerne:with-params (post-body post-caption)
     (if (not (current-user))
 	(make-response 403)
-	(let ((user-id (mongo-id (current-user))))
-	  (with-database (db "stash")
-	    (store (make-instance 'post
-				  :author-id user-id
-				  :caption post-caption
-				  :body (stash.model:markdown->html post-body))
-		   db))
-	  (lucerne:redirect "/posts")))))
+        (progn
+          (crane:create 'post
+                        :author current-user
+                        :caption post-caption
+                        :body (stash.model:markdown->html post-body))
+          (lucerne:redirect "/posts")))))
 
 ;;; ==============================
 ;;; Paste functions
@@ -89,25 +81,21 @@
 
 @lucerne:route app "/paste/:hash-or-id"
 (lucerne:defview paste (hash-or-id)
-  (with-database (db "stash")
-    (let ((paste
-           (or
-            (car (find (make-instance
-                        'paste
-                        :hash hash-or-id) db))
-            (car (find (make-instance
-                        'paste
-                        :id hash-or-id) db)))))
-      (render-template-with-user
-       +paste.html+
-       :menu t
-       :paste paste))))
+  (let ((paste
+         (or (crane:single! 'paste
+                            :hash hash)
+             (crane:single! 'paste
+                            :short-id id))))
+    (render-template-with-user
+     +paste.html+
+     :menu t
+     :paste paste)))
 
 (flet ((paste-hash (body timestamp)
          (string->hash (format nil "~a~a" body timestamp)))
-
        (new-id ()
-         (let ((chars "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789"))
+         (let ((chars
+                "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789"))
            (coerce (loop :repeat 5
                       :collect (aref chars
                                      (random (length chars)
@@ -117,38 +105,35 @@
   @lucerne:route app (:post "/paste/add")
   (lucerne:defview add-paste ()
     (lucerne:with-params (caption language body)
-      (with-database (db "stash")
-        (let* ((timestamp (get-universal-time))
-               (hash (paste-hash body timestamp)))
-          (store (make-instance 'paste
-                                :caption caption
-                                :body (pygmentize body language)
-                                :timestamp timestamp
-                                :hash hash)
-                 db)
-          (lucerne:redirect (format nil "/paste/~a" hash))))))
+      (let* ((timestamp (get-universal-time))
+             (hash (paste-hash body timestamp)))
+        (crane:create 'paste
+                      :caption caption
+                      :body (pygmentize body language)
+                      :timestamp timestamp
+                      :hash hash)
+        (lucerne:redirect (format nil "/paste/~a" hash)))))
 
   @lucerne:route app (:post "/sp")
   (lucerne:defview quickpaste ()
     (lucerne:with-params (s)
       ;; s is multipart/form-data, thus it's a flexi-stream instead of regular
       ;; simple string
-      (with-database (db "stash")
-        (let* ((body (read-flexi-stream-to-string (car s)))
-               (id (loop :for id := (new-id)
-                      :until (null (find (make-instance 'paste :id id)
-                                         db))
-                      :finally (return id)))
-               (timestamp (get-universal-time))
-               (hash (paste-hash body timestamp)))
-          (store (make-instance 'paste
-                                :body body
-                                :timestamp timestamp
-                                :hash hash
-                                :id id)
-                 db)
-          (lucerne:respond (format nil "http://~a/paste/~a~%" (config-get :domain) id)
-                           :status 200 :type "text/plain"))))))
+      (let* ((body (read-flexi-stream-to-string (car s)))
+             (id (loop :for id := (new-id)
+                    :until (not (crane:exists
+                                 'paste :id id))
+                    :finally (return id)))
+             (timestamp (get-universal-time))
+             (hash (paste-hash body timestamp)))
+        (crane:create 'paste
+                      :body body
+                      :timestamp timestamp
+                      :hash hash
+                      :short-id id)
+        (lucerne:respond (format nil "http://~a/paste/~a~%"
+                                 (config-get :domain) id)
+                         :status 200 :type "text/plain")))))
 
 ;;; ==============================
 ;;; Admin interface
@@ -174,20 +159,13 @@
   (lucerne:with-params (delete-posts
                         delete-empty-posts
                         just-redirect)
-    (with-database (db "stash")
-      (cond
-        (delete-posts
-         (remove (all-collection "posts") db)
-         (make-response 302 '(:location "/posts")))
-        (delete-empty-posts
-         (remove (make-instance 'post
-                                :body ""
-                                :caption "")
-                 db)
-         (make-response 302 '(:location "/posts")))
-        (just-redirect
-         (make-response 302 '(:location "/")))
-        (t (make-response 200))))))
+    (cond
+      (delete-posts
+       (crane:delete-from 'post)
+       (make-response 302 '(:location "/posts")))
+      (just-redirect
+       (make-response 302 '(:location "/")))
+      (t (make-response 200)))))
 
 @lucerne:route app "/admin/add-user"
 @restrict-login app nil

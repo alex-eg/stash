@@ -17,27 +17,8 @@
            :read-flexi-stream-to-string))
 
 (defpackage :stash.model
-  (:use :cl :stash.utils :closer-mop)
-  (:shadow :remove
-           :find)
-  (:shadowing-import-from :closer-mop
-                          :standard-method :standard-generic-function
-                          :defmethod :defgeneric :standard-class)
-  (:export :with-database
-           :with-collection
-           :with-database-and-collection
-
-           :create-index
-
-           :store
-           :store-one
-           :remove
-           :find
-           :mongo-id
-           :all-collection
-
-           :collection
-
+  (:use :cl :stash.utils :crane)
+  (:export :connect-database
            :user
            :user-login
            :user-email
@@ -94,9 +75,7 @@
         :stash.utils
         :stash.views
         :stash.model)
-  (:shadowing-import-from :stash.model
-                          :remove
-                          :find)
+
   (:export :start-app
            :app
            :start-server

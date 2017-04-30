@@ -1,7 +1,7 @@
-*~
 *.fasl
 *.wx32fsl
 *.css
 *.js
 *.lx64fsl
 conf.lisp
+migrations/*.lisp-expr
